@@ -1,0 +1,5 @@
+insert into APP_NUTZ(typ, beschreibung, imageID, preis) VALUES ('STUDENT', 'Der Containertyp Student ist zwar einfach aber ... ', '40ft-2-frankfurt_2_wood-1-300x168.jpg', '2000');
+insert into APP_NUTZ(typ, beschreibung, imageID, preis) VALUES ('HOTEL', 'Der Containertyp Hotel ist ein Traum für jeden ... ', 'dsf0111_55-1-300x169.png', '2000');
+insert into APP_NUTZ(typ, beschreibung, imageID, preis) VALUES ('BOARDINGHOUSE', 'Der Containertyp Boardinghaus bietet extra  ... ', '40ft-2-office6-2_kamera_25_a-300x168.jpg', '2000');
+insert into APP_NUTZ(typ, beschreibung, imageID, preis) VALUES ('NUR BAD', 'Der Containertyp nur Bad ist für ... ', '40ft-2-frankfurt_2_wood-1-300x168.jpg', '2000');
+insert into APP_NUTZ(typ, beschreibung, imageID, preis) VALUES ('NUR WAND', 'Der Containertyp nur Wand hat ... ', 'dsf0449_55-200x300.jpg', '2000');
