@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
 <div class="generic-container">
     <div class="panel panel-default">
         <!-- Default panel contents -->
@@ -17,7 +16,7 @@
                                         <div ng-bind="tab.content"></div>
                                         <br>
                                         <md-button class="md-primary md-raised" ng-click="removeTab( tab )"
-                                                   ng-disabled="tabs.length <= 1">Löschen von Projektinformationen
+                                                   ng-disabled="tabs.length <= 4">Löschen von eigenen Tabs ...
                                         </md-button>
                                     </div>
                                 </md-tab>
@@ -28,7 +27,7 @@
                               style="padding-top: 0;">
                             <div layout="row" layout-sm="column">
                                 <div flex="" style="position: relative;">
-                                  <#--  <h2 class="md-subhead"
+                                <#--  <h2 class="md-subhead"
                                         style="position: absolute; bottom: 0; left: 0; margin: 0; font-weight: 500; text-transform: uppercase; line-height: 35px; white-space: nowrap;">
                                         Add neue Projektinformationen:</h2>-->
                                 </div>
@@ -38,7 +37,8 @@
                                 </md-input-container>
                                 <md-input-container>
                                     <label for="content">Inhalt</label>
-                                    <input type="text" id="content" ng-model="tContent">
+                                    ​<textarea id="content" rows="5" cols="70" ng-model="tContent"></textarea>
+                                <#--<input type="text" id="content" ng-model="tContent">-->
                                 </md-input-container>
                                 <md-button class="add-tab md-primary md-raised" ng-disabled="!tTitle || !tContent"
                                            type="submit" style="margin-right: 0;">Hinzufügen von Projektinformationen
