@@ -38,7 +38,7 @@
 <body>
 
 <!-- NAVIGATION -->
-<nav class="navbar navbar-inverse" role="navigation">
+<nav class="navbar navbar-inner" role="navigation">
     <div class="navbar-header">
         <a class="navbar-brand" ui-sref="login">CONTAINERWERK.COM CONFIGURATOR</a>
     </div>
@@ -69,7 +69,7 @@
 <script src="js/lib/localforage.min.js"></script>
 <script src="js/lib/ngStorage.min.js"></script>
 <script src="js/app/app.js"></script>
-<script src="js/app/container.js"></script>
+<script src="js/app/containers.js"></script>
 <script src="js/app/configurator.js"></script>
 <script src="js/utils/utils-service.js"></script>
 <script src="js/app/ModalDemoCtrl.js"></script>
