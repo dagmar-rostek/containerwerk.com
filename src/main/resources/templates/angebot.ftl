@@ -87,7 +87,7 @@
                     <div class="row">
 
                                 <h3><a class="col-sm-4" ui-sref="projektinformationen"> Projektinformationen </a>
-                                    <a class="col-sm-4" ui-sref="projektinformationen"> Containerliste </a>
+                                    <a class="col-sm-4" ui-sref="containers.list"> Containerliste </a>
                                     <a class="col-sm-4" ui-sref="projektinformationen"> Anbaumodule </a>
                                     <a class="col-sm-4" ui-sref="projektinformationen">  </a>   </h3>
 
