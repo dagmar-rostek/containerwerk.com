@@ -1,7 +1,5 @@
 package com.containerwerk.configurator.controller;
 
-import java.util.List;
-
 import com.containerwerk.configurator.model.*;
 import com.containerwerk.configurator.service.*;
 import com.containerwerk.configurator.util.CustomErrorType;
@@ -11,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -69,7 +65,7 @@ public class RestApiController {
 
 	// -------------------Retrieve  All Container -------------------------------------------
 
-	@RequestMapping(value = "/container/", method = RequestMethod.GET)
+	@RequestMapping(value = "/containers/", method = RequestMethod.GET)
 	public ResponseEntity<List<Container>> listAllContainer() {
 		List<Container> containers = containerService.findAllContainers();
 		if (containers.isEmpty()) {
@@ -95,7 +91,7 @@ public class RestApiController {
 
 
 	//--------------- Retrieve a single Container ------------------ //
-	@RequestMapping(value = "/container/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/containers/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getContainer(@PathVariable("id") long id) {
 		logger.info("Fetching Container with id {}", id);
 		Container container = containerService.findById(id);
@@ -175,7 +171,7 @@ public class RestApiController {
 
 	// -------------------Create a Container-------------------------------------------
 
-	@RequestMapping(value = "/container/", method = RequestMethod.POST)
+	@RequestMapping(value = "/containers/", method = RequestMethod.POST)
 	public ResponseEntity<?> createContainer(@RequestBody Container container, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating Container : {}", container);
 
@@ -187,7 +183,7 @@ public class RestApiController {
 		containerService.saveContainer(container);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/api/container/{id}").buildAndExpand(container.getId()).toUri());
+		headers.setLocation(ucBuilder.path("/api/containers/{id}").buildAndExpand(container.getId()).toUri());
 		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}
 
@@ -247,7 +243,7 @@ public class RestApiController {
 
 	// ------------------- Update a Container ------------------------------------------------
 
-	@RequestMapping(value = "/container/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/containers/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateContainer(@PathVariable("id") long id, @RequestBody Container container) {
 		logger.info("Updating Container with id {}", id);
 
@@ -307,7 +303,7 @@ public class RestApiController {
 
 	// ------------------- Delete a Container-----------------------------------------
 
-	@RequestMapping(value = "/container/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/containers/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteContainer(@PathVariable("id") long id) {
 		logger.info("Fetching & Deleting Container with id {}", id);
 
@@ -344,7 +340,7 @@ public class RestApiController {
 
 	// ------------------- Delete All Container-----------------------------
 
-	@RequestMapping(value = "/container/", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/containers/", method = RequestMethod.DELETE)
 	public ResponseEntity<Container> deleteAllContainer() {
 		logger.info("Deleting All Container");
 
