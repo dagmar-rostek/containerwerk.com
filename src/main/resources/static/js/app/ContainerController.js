@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('crudApp')
-    .controller('ContainerController',  ['ContainerService', '$scope', function( ContainerService, $scope) {
+    .controller('ContainerController',  ['ContainerService', '$scope',
+        function( ContainerService, $scope) {
 
         var self = this;
         self.container = {};
