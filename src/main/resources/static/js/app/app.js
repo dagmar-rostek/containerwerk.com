@@ -2,6 +2,7 @@ var app = angular.module('crudApp', [
     //   'crudApp.container',
     'ngMaterial', 'ngMessages', 'material.svgAssetsCache',
     'crudApp.configurator',
+    'crudApp.containers',
     'crudApp.utils.service',
     'ui.router',
     'ngStorage',
@@ -29,7 +30,7 @@ app.constant('urls', {
     LOGIN_SERVICE_API: 'http://localhost:8080/api/login/',
     USER_SERVICE_API: 'http://localhost:8080/api/user/',
     ANGEBOT_SERVICE_API: 'http://localhost:8080/api/angebot/',
-    CONTAINER_SERVICE_API: 'http://localhost:8080/api/container/',
+    CONTAINER_SERVICE_API: 'http://localhost:8080/api/containers/',
     MODUL_SERVICE_API: 'http://localhost:8080/api/modul/',
     NUTZUNGSART_SERVICE_API: 'http://localhost:8080/api/nutzungsart/',
     PROJEKTINFORMATIONEN_SERVICE_API: 'http://localhost:8080/api/projektinformationen/'
@@ -48,8 +49,8 @@ app.config(
 
             // The `when` method says if the url is ever the 1st param, then redirect to the 2nd param
             // Here we are just setting up some convenience urls.
-                .when('/c?id', '/contacts/:id')
-                .when('/user/:id', '/contacts/:id')
+                .when('/c?id', '/containers/:id')
+                .when('/modul/:id', '/containers/:id')
 
                 // If the url is ever invalid, e.g. '/asdf', then redirect to '/' aka the home state
                 .otherwise('/');
