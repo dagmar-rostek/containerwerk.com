@@ -65,7 +65,7 @@ public class RestApiController {
 
 	// -------------------Retrieve  All Container -------------------------------------------
 
-	@RequestMapping(value = "/containers/", method = RequestMethod.GET)
+	@RequestMapping(value = "/container/", method = RequestMethod.GET)
 	public ResponseEntity<List<Container>> listAllContainer() {
 		List<Container> containers = containerService.findAllContainers();
 		if (containers.isEmpty()) {
@@ -91,7 +91,7 @@ public class RestApiController {
 
 
 	//--------------- Retrieve a single Container ------------------ //
-	@RequestMapping(value = "/containers/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/container/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getContainer(@PathVariable("id") long id) {
 		logger.info("Fetching Container with id {}", id);
 		Container container = containerService.findById(id);
@@ -126,7 +126,7 @@ public class RestApiController {
 		User user = userService.findById(id);
 		if (user == null) {
 			logger.error("User with id {} not found.", id);
-			return new ResponseEntity(new CustomErrorType("User with id " + id 
+			return new ResponseEntity(new CustomErrorType("User with id " + id
 					+ " not found"), HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -140,7 +140,7 @@ public class RestApiController {
 
 		if (userService.isUserExist(user)) {
 			logger.error("Unable to create. A User with name {} already exist", user.getName());
-			return new ResponseEntity(new CustomErrorType("Unable to create. A User with name " + 
+			return new ResponseEntity(new CustomErrorType("Unable to create. A User with name " +
 			user.getName() + " already exist."),HttpStatus.CONFLICT);
 		}
 		userService.saveUser(user);
@@ -171,7 +171,7 @@ public class RestApiController {
 
 	// -------------------Create a Container-------------------------------------------
 
-	@RequestMapping(value = "/containers/", method = RequestMethod.POST)
+	@RequestMapping(value = "/container/", method = RequestMethod.POST)
 	public ResponseEntity<?> createContainer(@RequestBody Container container, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating Container : {}", container);
 
@@ -243,7 +243,7 @@ public class RestApiController {
 
 	// ------------------- Update a Container ------------------------------------------------
 
-	@RequestMapping(value = "/containers/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/container/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateContainer(@PathVariable("id") long id, @RequestBody Container container) {
 		logger.info("Updating Container with id {}", id);
 
@@ -303,7 +303,7 @@ public class RestApiController {
 
 	// ------------------- Delete a Container-----------------------------------------
 
-	@RequestMapping(value = "/containers/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/container/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteContainer(@PathVariable("id") long id) {
 		logger.info("Fetching & Deleting Container with id {}", id);
 
@@ -340,7 +340,7 @@ public class RestApiController {
 
 	// ------------------- Delete All Container-----------------------------
 
-	@RequestMapping(value = "/containers/", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/container/", method = RequestMethod.DELETE)
 	public ResponseEntity<Container> deleteAllContainer() {
 		logger.info("Deleting All Container");
 
