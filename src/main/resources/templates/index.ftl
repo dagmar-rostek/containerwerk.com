@@ -81,7 +81,6 @@
 <script src="js/app/AngebotService.js"></script>
 <script src="js/app/AngebotController.js"></script>
 <script src="js/app/ContainerService.js"></script>
-<script src="js/app/ContainerController.js"></script>
 <script src="js/app/UserService.js"></script>
 <script src="js/app/UserController.js"></script>
 
