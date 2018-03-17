@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('crudApp')
-    .controller('ModalDemoCtrl', ['ContainerService', '$uibModal', '$log', '$document', '$routeParams', function (ContainerService, $uibModal, $log, $document, $routeParams) {
+    .controller('ModalDemoCtrl', ['ContainerService', '$uibModal', '$log', '$document', function (ContainerService, $uibModal, $log, $document) {
         var $ctrl = this;
         $ctrl.container = {};
         $ctrl.containers = [];
@@ -18,7 +18,7 @@ angular.module('crudApp')
         $ctrl.successMessage = '';
         $ctrl.errorMessage = '';
         $ctrl.done = false;
-        $ctrl.$routeParams = $routeParams;
+
 
 
         function submit() {
