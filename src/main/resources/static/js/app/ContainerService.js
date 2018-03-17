@@ -46,7 +46,7 @@ angular.module('crudApp').factory('ContainerService',
                 $http.get(urls.CONTAINER_SERVICE_API + id)
                     .then(
                         function(response){
-                            console.log('Fetched successfully Module with id: ' + id);
+                            console.log('Fetched successfully container with id: ' + id);
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
