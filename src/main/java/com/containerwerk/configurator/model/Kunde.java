@@ -46,6 +46,7 @@ public class Kunde implements Serializable {
         this.name = name;
     }
 
+    @OneToOne(targetEntity=Adresse.class, mappedBy = "adresse")
     public Adresse getAdresse() {
         return adresse;
     }
