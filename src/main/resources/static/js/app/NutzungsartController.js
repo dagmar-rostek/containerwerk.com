@@ -1,35 +1,38 @@
 'use strict';
 
-angular.module('crudApp').controller('NutzungsartController',
-    ['NutzungsartService', '$scope',  function( NutzungsartService, $scope) {
+angular.module('crudApp')
+    .controller('NutzungsartController',
+    ['NutzungsartService', '$uibModal', '$log', '$document',
+        function( NutzungsartService, $uibModal, $log, $document, $scope) {
 
-        var self = this;
-        self.nutzungsart = {};
-        self.nutzungsarts=[];
+        var $ctrl = this;
+        $ctrl.nutzungsart = {};
+        $ctrl.nutzungsarts=[];
 
-        self.submit = submit;
-        self.getAllNutzungsarts = getAllNutzungsarts;
-        self.createNutzungsart = createNutzungsart;
-        self.updateNutzungsart = updateNutzungsart;
-        self.removeNutzungsart = removeNutzungsart;
-        self.editNutzungsart = editNutzungsart;
-        self.reset = reset;
+        $ctrl.submit = submit;
+        $ctrl.getAllNutzungsarts = getAllNutzungsarts;
+        $ctrl.getNutzungsart = getNutzungsart;
+        $ctrl.createNutzungsart = createNutzungsart;
+        $ctrl.updateNutzungsart = updateNutzungsart;
+        $ctrl.removeNutzungsart = removeNutzungsart;
+        $ctrl.editNutzungsart = editNutzungsart;
+        $ctrl.reset = reset;
 
-        self.successMessage = '';
-        self.errorMessage = '';
-        self.done = false;
+        $ctrl.successMessage = '';
+        $ctrl.errorMessage = '';
+        $ctrl.done = false;
 
-        self.onlyIntegers = /^\d+$/;
-        self.onlyNumbers = /^\d+([,.]\d+)?$/;
+        $ctrl.onlyIntegers = /^\d+$/;
+        $ctrl.onlyNumbers = /^\d+([,.]\d+)?$/;
 
         function submit() {
             console.log('Submitting');
-            if (self.nutzungsart.id === undefined || self.nutzungsart.id === null) {
-                console.log('Saving New Nutzungsart', self.nutzungsart);
-                createNutzungsart(self.nutzungsart);
+            if ($ctrl.nutzungsart.id === undefined || $ctrl.nutzungsart.id === null) {
+                console.log('Saving New Nutzungsart', $ctrl.nutzungsart);
+                createNutzungsart($ctrl.nutzungsart);
             } else {
-                updateNutzungsart(self.nutzungsart, self.nutzungsart.id);
-                console.log('Nutzungsart updated with id ', self.nutzungsart.id);
+                updateNutzungsart($ctrl.nutzungsart, $ctrl.nutzungsart.id);
+                console.log('Nutzungsart updated with id ', $ctrl.nutzungsart.id);
             }
         }
 
@@ -39,16 +42,16 @@ angular.module('crudApp').controller('NutzungsartController',
                 .then(
                     function (response) {
                         console.log('Nutzungsart created successfully');
-                        self.successMessage = 'Nutzungsart created successfully';
-                        self.errorMessage='';
-                        self.done = true;
-                        self.nutzungsart={};
+                        $ctrl.successMessage = 'Nutzungsart created successfully';
+                        $ctrl.errorMessage='';
+                        $ctrl.done = true;
+                        $ctrl.nutzungsart={};
                         $scope.myForm.$setPristine();
                     },
                     function (errResponse) {
                         console.error('Error while creating Nutzungsart');
-                        self.errorMessage = 'Error while creating Nutzungsart .... :(: ' + errResponse.data.errorMessage;
-                        self.successMessage='';
+                        $ctrl.errorMessage = 'Error while creating Nutzungsart .... :(: ' + errResponse.data.errorMessage;
+                        $ctrl.successMessage='';
                     }
                 );
         }
@@ -60,15 +63,15 @@ angular.module('crudApp').controller('NutzungsartController',
                 .then(
                     function (response){
                         console.log('Nutzungsart updated successfully');
-                        self.successMessage='Nutzungsart updated successfully';
-                        self.errorMessage='';
-                        self.done = true;
+                        $ctrl.successMessage='Nutzungsart updated successfully';
+                        $ctrl.errorMessage='';
+                        $ctrl.done = true;
                         $scope.myForm.$setPristine();
                     },
                     function(errResponse){
                         console.error('Error while updating Nutzungsart');
-                        self.errorMessage='Error while updating Nutzungsart '+errResponse.data;
-                        self.successMessage='';
+                        $ctrl.errorMessage='Error while updating Nutzungsart '+errResponse.data;
+                        $ctrl.successMessage='';
                     }
                 );
         }
@@ -93,11 +96,11 @@ angular.module('crudApp').controller('NutzungsartController',
         }
 
         function editNutzungsart(id) {
-            self.successMessage='';
-            self.errorMessage='';
+            $ctrl.successMessage='';
+            $ctrl.errorMessage='';
             NutzungsartService.getNutzungsart(id).then(
                 function (nutzungsart) {
-                    self.nutzungsart = nutzungsart;
+                    $ctrl.nutzungsart = nutzungsart;
                 },
                 function (errResponse) {
                     console.error('Error while removing nutzungsart ' + id + ', Error :' + errResponse.data);
@@ -105,12 +108,98 @@ angular.module('crudApp').controller('NutzungsartController',
             );
         }
         function reset(){
-            self.successMessage='';
-            self.errorMessage='';
-            self.nutzungsart={};
+            $ctrl.successMessage='';
+            $ctrl.errorMessage='';
+            $ctrl.nutzungsart={};
             $scope.myForm.$setPristine(); //reset Form
         }
+
+        function getNutzungsart(id) {
+            $ctrl.successMessage = '';
+            $ctrl.errorMessage = '';
+            return NutzungsartService.getNutzungsart(id).then(
+                function(nutzungsart){
+                    $ctrl.nutzungsart = nutzungsart;
+                },
+                function (errResponse){
+                    console.error('Error while finding nutzungsart ' + id + ', Error: ' + errResponse.data);
+                }
+            );
+        }
+
+        $ctrl.animationsEnabled = true;
+
+        $ctrl.openModal = function (size){
+            var modalInstance = $uibModal.open({
+                animation: $ctrl.animationsEnabled,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'myModalContentNutzungsart.html',
+                controller: 'ModalInstanceNutzungsartCtrl',
+                controllerAs: '$ctrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        console.log("zeile 154");
+                        return $ctrl.getAllNutzungsarts();
+                        // return $ctrl.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $ctrl.selected = selectedItem;
+                console.log("zeile 161");
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+    }]);
+
+// Please note that $uibModalInstance represents a modal window (instance) dependency.
+// It is not the same as the $uibModal service used above.
+
+angular.module('crudApp').controller('ModalInstanceNutzungsartCtrl', function ($uibModalInstance, items) {
+    var $ctrl = this;
+    $ctrl.items = items;
+    $ctrl.selected = {
+        item: $ctrl.items[0]
+    };
+
+    $ctrl.ok = function () {
+        $uibModalInstance.close($ctrl.selected.item);
+    };
+
+    $ctrl.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
+// Please note that the close and dismiss bindings are from $uibModalInstance.
+
+angular.module('crudApp').component('modalComponent', {
+    templateUrl: 'myModalContentNutzungsart.html',
+    bindings: {
+        resolve: '<',
+        close: '&',
+        dismiss: '&'
+    },
+    controller: function () {
+        var $ctrl = this;
+        $ctrl.$onInit = function () {
+            $ctrl.items = $ctrl.resolve.items;
+            $ctrl.selected = {
+                item: $ctrl.items[0]
+            };
+        };
+
+        $ctrl.ok = function () {
+            $ctrl.close({$value: $ctrl.selected.item});
+        };
+
+        $ctrl.cancel = function () {
+            $ctrl.dismiss({$value: 'cancel'});
+        };
     }
-
-
-    ]);
+});
