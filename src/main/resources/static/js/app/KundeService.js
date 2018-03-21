@@ -18,7 +18,7 @@ angular.module('crudApp').factory('KundeService',
             function loadAllKundes() {
                 console.log('Fetching all kundes');
                 var deferred = $q.defer();
-                $http.get(urls.USER_SERVICE_API)
+                $http.get(urls.KUNDE_SERVICE_API)
                     .then(
                         function (response) {
                             console.log('Fetched successfully all kundes');
@@ -40,7 +40,7 @@ angular.module('crudApp').factory('KundeService',
             function getKunde(id) {
                 console.log('Fetching Kunde with id :'+id);
                 var deferred = $q.defer();
-                $http.get(urls.USER_SERVICE_API + id)
+                $http.get(urls.KUNDE_SERVICE_API + id)
                     .then(
                         function (response) {
                             console.log('Fetched successfully Kunde with id :'+id);
@@ -57,7 +57,7 @@ angular.module('crudApp').factory('KundeService',
             function createKunde(kunde) {
                 console.log('Creating Kunde');
                 var deferred = $q.defer();
-                $http.post(urls.USER_SERVICE_API, kunde)
+                $http.post(urls.KUNDE_SERVICE_API, kunde)
                     .then(
                         function (response) {
                             loadAllKundes();
@@ -74,7 +74,7 @@ angular.module('crudApp').factory('KundeService',
             function updateKunde(kunde, id) {
                 console.log('Updating Kunde with id '+id);
                 var deferred = $q.defer();
-                $http.put(urls.USER_SERVICE_API + id, kunde)
+                $http.put(urls.KUNDE_SERVICE_API + id, kunde)
                     .then(
                         function (response) {
                             loadAllKundes();
@@ -91,7 +91,7 @@ angular.module('crudApp').factory('KundeService',
             function removeKunde(id) {
                 console.log('Removing Kunde with id '+id);
                 var deferred = $q.defer();
-                $http.delete(urls.USER_SERVICE_API + id)
+                $http.delete(urls.KUNDE_SERVICE_API + id)
                     .then(
                         function (response) {
                             loadAllKundes();
