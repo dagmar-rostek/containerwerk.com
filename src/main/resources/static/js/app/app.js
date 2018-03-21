@@ -7,6 +7,7 @@ var app = angular.module('crudApp', [
     'ui.router',
     'ngStorage',
     'ui.router.stateHelper',
+    //'ngRoute',
     'ui.bootstrap'
 
 ]);
@@ -29,6 +30,7 @@ app.constant('urls', {
     BASE: 'http://localhost:8080/',
     LOGIN_SERVICE_API: 'http://localhost:8080/api/login/',
     USER_SERVICE_API: 'http://localhost:8080/api/user/',
+    KUNDE_SERVICE_API: 'http://localhost:8080/api/kunde/',
     ANGEBOT_SERVICE_API: 'http://localhost:8080/api/angebot/',
     CONTAINER_SERVICE_API: 'http://localhost:8080/api/container/',
     MODUL_SERVICE_API: 'http://localhost:8080/api/modul/',
@@ -44,12 +46,24 @@ app.config(
             // Redirects and Otherwise //
             /////////////////////////////
 
+
+           /* $routeProvider.when('/container/:angebot.id ',
+                {
+                    templateUrl: 'partials/container',
+                    controller: 'ModalDemoCtrl'
+                });
+*/
             // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
             $urlRouterProvider
 
+               /* .when('/kunde/',
+                    {
+                        templateUrl: 'partials/kunde',
+                        controller: 'KundeController'
+                    }
+                )*/
 
-
-            // If the url is ever invalid, e.g. '/asdf', then redirect to '/' aka the home state
+                // If the url is ever invalid, e.g. '/asdf', then redirect to '/' aka the home state
                 .otherwise('/');
 
             //////////////////////////
@@ -81,11 +95,18 @@ app.config(
                     templateUrl: 'partials/angebot',
                     controller: 'AngebotController',
                     controllerAs: 'ctrl',
+
                     resolve: {
                         angebote: function ($q, AngebotService) {
                             console.log('Load all angebote');
                             var deferred = $q.defer();
                             AngebotService.loadAllAngebote().then(deferred.resolve, deferred.resolve);
+                            return deferred.promise;
+                        },
+                        kundes: function ($q, KundeService){
+                            console.log('Load all Kundes');
+                            var deferred = $q.defer();
+                            KundeService.loadAllKundes().then(deferred.resolve, deferred.resolve);
                             return deferred.promise;
                         }
                     }
@@ -95,8 +116,40 @@ app.config(
                     name: 'configurator',
                     url: '/configurator',
 
-                    templateUrl: 'partials/configurator'
+                    templateUrl: 'partials/configurator',
+                    controller: 'ConfiguratorController',
+                    controllerAs: 'ctrl'
 
+                })
+                .state({
+                    name: 'nutzungsart',
+                    url: '/nutzungsart',
+                    templateUrl: 'partials/nutzungsart',
+                    controller: 'NutzungsartController',
+                    controllerAs: 'ctrl',
+                    resolve: {
+                        containers: function ($q, NutzungsartService) {
+                            console.log('Load all container');
+                            var deferred = $q.defer();
+                            NutzungsartService.loadAllNutzungsarts().then(deferred.resolve, deferred.resolve);
+                            return deferred.promise;
+                        }
+                    }
+                })
+                .state({
+                    name: 'containers',
+                    url: '/containers',
+                    templateUrl: 'partials/containers',
+                    controller: 'containers',
+                    controllerAs: 'ctrl',
+                    resolve: {
+                        containers: function ($q, ContainerService) {
+                            console.log('Load all container');
+                            var deferred = $q.defer();
+                            ContainerService.loadAllContainers().then(deferred.resolve, deferred.resolve);
+                            return deferred.promise;
+                        }
+                    }
                 })
                 .state({
                     name: 'container',
@@ -118,7 +171,7 @@ app.config(
                             /* // for column #1, defines a separate controller
                              'modul@container': {
                                  templateUrl: 'partials/modul',
-                                 controller: 'ModalDemoCtrl',
+                                 controller: 'AngebotController',
                                  controllerAs: 'ctrl',
                                  resolve: {
                                      containers: function ($q, ContainerService) {
