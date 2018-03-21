@@ -1,35 +1,37 @@
 'use strict';
 
-angular.module('crudApp').controller('KundeController',
-    ['KundeService', '$scope',  function( KundeService, $scope) {
+angular.module('crudApp')
+    .controller('KundeController',
+    ['KundeService', '$uibModal', '$log', '$document', '$scope',
+        function (KundeService, $uibModal, $log, $document, $scope) {
 
-        var self = this;
-        self.kunde = {};
-        self.kundes=[];
+        var $ctrl = this;
+        $ctrl.kunde = {};
+        $ctrl.kundes = [];
 
-        self.submit = submit;
-        self.getAllKundes = getAllKundes;
-        self.createKunde = createKunde;
-        self.updateKunde = updateKunde;
-        self.removeKunde = removeKunde;
-        self.editKunde = editKunde;
-        self.reset = reset;
+        $ctrl.submit = submit;
+        $ctrl.getAllKundes = getAllKundes;
+        $ctrl.createKunde = createKunde;
+        $ctrl.updateKunde = updateKunde;
+        $ctrl.removeKunde = removeKunde;
+        $ctrl.editKunde = editKunde;
+        $ctrl.reset = reset;
 
-        self.successMessage = '';
-        self.errorMessage = '';
-        self.done = false;
+        $ctrl.successMessage = '';
+        $ctrl.errorMessage = '';
+        $ctrl.done = false;
 
-        self.onlyIntegers = /^\d+$/;
-        self.onlyNumbers = /^\d+([,.]\d+)?$/;
+        $ctrl.onlyIntegers = /^\d+$/;
+        $ctrl.onlyNumbers = /^\d+([,.]\d+)?$/;
 
         function submit() {
             console.log('Submitting');
-            if (self.kunde.id === undefined || self.kunde.id === null) {
-                console.log('Saving New Kunde', self.kunde);
-                createKunde(self.kunde);
+            if ($ctrl.kunde.id === undefined || $ctrl.kunde.id === null) {
+                console.log('Saving New Kunde', $ctrl.kunde);
+                createKunde($ctrl.kunde);
             } else {
-                updateKunde(self.kunde, self.kunde.id);
-                console.log('Kunde updated with id ', self.kunde.id);
+                updateKunde($ctrl.kunde, $ctrl.kunde.id);
+                console.log('Kunde updated with id ', $ctrl.kunde.id);
             }
         }
 
@@ -39,78 +41,155 @@ angular.module('crudApp').controller('KundeController',
                 .then(
                     function (response) {
                         console.log('Kunde created successfully');
-                        self.successMessage = 'Kunde created successfully';
-                        self.errorMessage='';
-                        self.done = true;
-                        self.kunde={};
+                        $ctrl.successMessage = 'Kunde created successfully';
+                        $ctrl.errorMessage = '';
+                        $ctrl.done = true;
+                        $ctrl.kunde = {};
                         $scope.myForm.$setPristine();
                     },
                     function (errResponse) {
                         console.error('Error while creating Kunde');
-                        self.errorMessage = 'Error while creating Kunde .... :(: ' + errResponse.data.errorMessage;
-                        self.successMessage='';
+                        $ctrl.errorMessage = 'Error while creating Kunde .... :(: ' + errResponse.data.errorMessage;
+                        $ctrl.successMessage = '';
                     }
                 );
         }
 
 
-        function updateKunde(kunde, id){
+        function updateKunde(kunde, id) {
             console.log('About to update kunde');
             KundeService.updateKunde(kunde, id)
                 .then(
-                    function (response){
+                    function (response) {
                         console.log('Kunde updated successfully');
-                        self.successMessage='Kunde updated successfully';
-                        self.errorMessage='';
-                        self.done = true;
+                        $ctrl.successMessage = 'Kunde updated successfully';
+                        $ctrl.errorMessage = '';
+                        $ctrl.done = true;
                         $scope.myForm.$setPristine();
                     },
-                    function(errResponse){
+                    function (errResponse) {
                         console.error('Error while updating Kunde');
-                        self.errorMessage='Error while updating Kunde '+errResponse.data;
-                        self.successMessage='';
+                        $ctrl.errorMessage = 'Error while updating Kunde ' + errResponse.data;
+                        $ctrl.successMessage = '';
                     }
                 );
         }
 
 
-        function removeKunde(id){
-            console.log('About to remove Kunde with id '+id);
+        function removeKunde(id) {
+            console.log('About to remove Kunde with id ' + id);
             KundeService.removeKunde(id)
                 .then(
-                    function(){
-                        console.log('Kunde '+id + ' removed successfully');
+                    function () {
+                        console.log('Kunde ' + id + ' removed successfully');
                     },
-                    function(errResponse){
-                        console.error('Error while removing kunde '+id +', Error :'+errResponse.data);
+                    function (errResponse) {
+                        console.error('Error while removing kunde ' + id + ', Error :' + errResponse.data);
                     }
                 );
         }
 
 
-        function getAllKundes(){
+        function getAllKundes() {
             return KundeService.getAllKundes();
         }
 
         function editKunde(id) {
-            self.successMessage='';
-            self.errorMessage='';
+            $ctrl.successMessage = '';
+            $ctrl.errorMessage = '';
             KundeService.getKunde(id).then(
                 function (kunde) {
-                    self.kunde = kunde;
+                    $ctrl.kunde = kunde;
                 },
                 function (errResponse) {
                     console.error('Error while removing kunde ' + id + ', Error :' + errResponse.data);
                 }
             );
         }
-        function reset(){
-            self.successMessage='';
-            self.errorMessage='';
-            self.kunde={};
+
+        function reset() {
+            $ctrl.successMessage = '';
+            $ctrl.errorMessage = '';
+            $ctrl.kunde = {};
             $scope.myForm.$setPristine(); //reset Form
         }
+
+
+        /*$ctrl.animationsEnabled = true;
+
+        $ctrl.openModalKunde = function (size) {
+            var modalInstance = $uibModal.open({
+                animation: $ctrl.animationsEnabled,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'myModalKundeContent.html',
+                controller: 'ModalKundeInstanceCtrl',
+                controllerAs: '$ctrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        console.log("zeile 154");
+                        return $ctrl.getAllKundes();
+                        // return $ctrl.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $ctrl.selected = selectedItem;
+                console.log("zeile 161");
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };*/
+
+    }]);
+
+// Please note that $uibModalInstance represents a modal window (instance) dependency.
+// It is not the same as the $uibModal service used above.
+/*
+
+angular.module('crudApp').controller('ModalKundeInstanceCtrl', function ($uibModalInstance, items) {
+    var $ctrl = this;
+    $ctrl.items = items;
+    $ctrl.selected = {
+        item: $ctrl.items[0]
+    };
+
+    $ctrl.ok = function () {
+        $uibModalInstance.close($ctrl.selected.item);
+    };
+
+    $ctrl.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
+// Please note that the close and dismiss bindings are from $uibModalInstance.
+
+angular.module('crudApp').component('modalKundeComponent', {
+    templateUrl: 'myModalKundeContent.html',
+    bindings: {
+        resolve: '<',
+        close: '&',
+        dismiss: '&'
+    },
+    controller: function () {
+        var $ctrl = this;
+        $ctrl.$onInit = function () {
+            $ctrl.items = $ctrl.resolve.items;
+            $ctrl.selected = {
+                item: $ctrl.items[0]
+            };
+        };
+
+        $ctrl.ok = function () {
+            $ctrl.close({$value: $ctrl.selected.item});
+        };
+
+        $ctrl.cancel = function () {
+            $ctrl.dismiss({$value: 'cancel'});
+        };
     }
-
-
-    ]);
+});
+*/
