@@ -26,6 +26,19 @@ public class Adresse implements Serializable {
     @Column(name="ort", nullable = false)
     private Integer ort;
 
+    @Column(name="kunde")
+    private Kunde kunde;
+
+
+    @OneToOne
+    public Kunde getKunde() {
+        return kunde;
+    }
+
+    public void setKunde(Kunde kunde) {
+        this.kunde = kunde;
+    }
+
     public Long getId() {
         return id;
     }
@@ -66,22 +79,24 @@ public class Adresse implements Serializable {
         return Objects.equals(getId(), adresse.getId()) &&
                 Objects.equals(getStrasse(), adresse.getStrasse()) &&
                 Objects.equals(getPlz(), adresse.getPlz()) &&
-                Objects.equals(getOrt(), adresse.getOrt());
+                Objects.equals(getOrt(), adresse.getOrt()) &&
+                Objects.equals(getKunde(), adresse.getKunde());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getId(), getStrasse(), getPlz(), getOrt());
+        return Objects.hash(getId(), getStrasse(), getPlz(), getOrt(), getKunde());
     }
 
     @Override
     public String toString() {
-        return "AdresseRepository{" +
+        return "Adresse{" +
                 "id=" + id +
                 ", strasse='" + strasse + '\'' +
                 ", plz=" + plz +
                 ", ort=" + ort +
+                ", kunde=" + kunde +
                 '}';
     }
 }
