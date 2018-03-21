@@ -1,4 +1,4 @@
-<div ng-controller="ModalDemoCtrl as $ctrl" class="generic-container">
+<div ng-controller="AngebotController as $ctrl" class="generic-container">
     <div class="row">
         <div class="col-lg-4">
             <div class="modal-demo">
