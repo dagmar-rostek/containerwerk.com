@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('crudApp')
-    .controller('ModalDemoCtrl', ['ContainerService', '$uibModal', '$log', '$document', function (ContainerService, $uibModal, $log, $document) {
+    .controller('ModalDemoCtrl',
+        ['ContainerService', '$uibModal', '$log', '$document',  '$scope',
+        function (ContainerService, $uibModal, $log, $document, $scope) {
         var $ctrl = this;
         $ctrl.container = {};
         $ctrl.containers = [];
@@ -21,25 +23,26 @@ angular.module('crudApp')
 
 
 
+
         function submit() {
             console.log('Submitting');
-            if (self.container.id === undefined || self.container.id === null) {
-                console.log('Saving New Container', self.container);
-                createContainer(self.container);
+            if ($ctrl.container.id === undefined || $ctrl.container.id === null) {
+                console.log('Saving New Container', $ctrl.container);
+                createContainer($ctrl.container);
             } else {
-                updateContainer(self.container, self.container.id);
-                console.log('Container updated with id ', self.container.id);
+                updateContainer($ctrl.container, $ctrl.container.id);
+                console.log('Container updated with id ', $ctrl.container.id);
             }
         }
 
         function berechne() {
             console.log('berechne');
-            if (self.container.id === undefined || self.container.id === null) {
-                console.log('Saving New Container', self.container);
-                createContainer(self.container);
+            if ($ctrl.container.id === undefined || $ctrl.container.id === null) {
+                console.log('Saving New Container', $ctrl.container);
+                createContainer($ctrl.container);
             } else {
-                updateContainer(self.container, self.container.id);
-                console.log('Container updated with id ', self.container.id);
+                updateContainer($ctrl.container, $ctrl.container.id);
+                console.log('Container updated with id ', $ctrl.container.id);
             }
         }
 
@@ -49,16 +52,16 @@ angular.module('crudApp')
                 .then(
                     function (response) {
                         console.log('container created successfully');
-                        self.successMessage = 'container created successfully';
-                        self.errorMessage = '';
-                        self.done = true;
-                        self.container = {};
+                        $ctrl.successMessage = 'container created successfully';
+                        $ctrl.errorMessage = '';
+                        $ctrl.done = true;
+                        $ctrl.container = {};
                         $scope.myForm.$setPristine();
                     },
                     function (errResponse) {
                         console.error('Error while creating container');
-                        self.errorMessage = 'Error while creating container .... :(: ' + errResponse.data.errorMessage;
-                        self.successMessage = '';
+                        $ctrl.errorMessage = 'Error while creating container .... :(: ' + errResponse.data.errorMessage;
+                        $ctrl.successMessage = '';
                     }
                 );
         }
@@ -70,15 +73,15 @@ angular.module('crudApp')
                 .then(
                     function (response) {
                         console.log('Container updated successfully');
-                        self.successMessage = 'Container updated successfully';
-                        self.errorMessage = '';
-                        self.done = true;
+                        $ctrl.successMessage = 'Container updated successfully';
+                        $ctrl.errorMessage = '';
+                        $ctrl.done = true;
                         $scope.myForm.$setPristine();
                     },
                     function (errResponse) {
                         console.error('Error while updating Container');
-                        self.errorMessage = 'Error while updating Container ' + errResponse.data;
-                        self.successMessage = '';
+                        $ctrl.errorMessage = 'Error while updating Container ' + errResponse.data;
+                        $ctrl.successMessage = '';
                     }
                 );
         }
@@ -101,11 +104,11 @@ angular.module('crudApp')
         }
 
         function editContainer(id) {
-            self.successMessage = '';
-            self.errorMessage = '';
+            $ctrl.successMessage = '';
+            $ctrl.errorMessage = '';
             ContainerService.getCotnainer(id).then(
                 function (container) {
-                    self.angebot = container;
+                    $ctrl.angebot = container;
                 },
                 function (errResponse) {
                     console.error('Error while removing container ' + id + ', Error :' + errResponse.data);
@@ -114,18 +117,18 @@ angular.module('crudApp')
         }
 
         function reset() {
-            self.successMessage = '';
-            self.errorMessage = '';
-            self.container = {};
+            $ctrl.successMessage = '';
+            $ctrl.errorMessage = '';
+            $ctrl.container = {};
             $scope.myForm.$setPristine(); //reset Form
         }
 
         function getContainer(id) {
-            self.successMessage = '';
-            self.errorMessage = '';
+            $ctrl.successMessage = '';
+            $ctrl.errorMessage = '';
             return ContainerService.getContainer(id).then(
                 function (container) {
-                    self.container = container;
+                    $ctrl.container = container;
                 },
                 function (errResponse) {
                     console.error('Error while finding container ' + id + ', Error : ' + errResponse.data);
@@ -138,9 +141,7 @@ angular.module('crudApp')
 
         $ctrl.animationsEnabled = true;
 
-        $ctrl.open = function (size, parentSelector) {
-            var parentElem = parentSelector ?
-                angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+        $ctrl.openModal = function (size) {
             var modalInstance = $uibModal.open({
                 animation: $ctrl.animationsEnabled,
                 ariaLabelledBy: 'modal-title',
@@ -149,7 +150,6 @@ angular.module('crudApp')
                 controller: 'ModalInstanceCtrl',
                 controllerAs: '$ctrl',
                 size: size,
-                appendTo: parentElem,
                 resolve: {
                     items: function () {
                         console.log("zeile 154");
@@ -161,12 +161,13 @@ angular.module('crudApp')
 
             modalInstance.result.then(function (selectedItem) {
                 $ctrl.selected = selectedItem;
+                console.log("zeile 161");
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
             });
         };
 
-        $ctrl.openComponentModal = function () {
+       /* $ctrl.openComponentModal = function () {
             var modalInstance = $uibModal.open({
                 animation: $ctrl.animationsEnabled,
                 component: 'modalComponent',
@@ -184,9 +185,9 @@ angular.module('crudApp')
             }, function () {
                 $log.info('modal-component dismissed at: ' + new Date());
             });
-        };
+        };*/
 
-        $ctrl.openMultipleModals = function () {
+       /* $ctrl.openMultipleModals = function () {
             $uibModal.open({
                 animation: $ctrl.animationsEnabled,
                 ariaLabelledBy: 'modal-title-bottom',
@@ -208,11 +209,11 @@ angular.module('crudApp')
                     $scope.name = 'top';
                 }
             });
-        };
+        };*/
 
-        $ctrl.toggleAnimation = function () {
+       /* $ctrl.toggleAnimation = function () {
             $ctrl.animationsEnabled = !$ctrl.animationsEnabled;
-        };
+        };*/
     }]);
 
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
@@ -245,7 +246,6 @@ angular.module('crudApp').component('modalComponent', {
     },
     controller: function () {
         var $ctrl = this;
-
         $ctrl.$onInit = function () {
             $ctrl.items = $ctrl.resolve.items;
             $ctrl.selected = {
