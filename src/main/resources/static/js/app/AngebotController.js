@@ -1,36 +1,45 @@
 'use strict';
 
-angular.module('crudApp').controller('AngebotController',
-    ['AngebotService', '$scope',  function( AngebotService, $scope) {
+angular.module('crudApp')
+    .controller('AngebotController',
+    ['AngebotService', 'KundeService', '$uibModal', '$log', '$document', '$scope',
+        function( AngebotService, KundeService, $uibModal, $log, $document, $scope) {
 
-        var self = this;
-        self.angebot = {};
-        self.angebote = [];
+        var $ctrl = this;
+        $ctrl.angebot = {};
+        $ctrl.angebote = [];
+        $ctrl.container = {};
+        $ctrl.containers = [];
 
-        self.submit = submit;
-        self.getAllAngebote = getAllAngebote;
-        self.createAngebot = createAngebot;
-        self.updateAngebot = updateAngebot;
-        self.removeAngebot = removeAngebot;
-        self.editAngebot = editAngebot;
-        self.reset = reset;
+        $ctrl.submit = submit;
+        $ctrl.submitKunde = submitKunde;
 
-        self.successMessage = '';
-        self.errorMessage = '';
-        self.done = false;
+        $ctrl.getAllAngebote = getAllAngebote;
+        $ctrl.getAllKundes = getAllKundes;
+        $ctrl.getAngebot = getAngebot;
+        $ctrl.createAngebot = createAngebot;
+        $ctrl.updateAngebot = updateAngebot;
+        $ctrl.removeAngebot = removeAngebot;
+        $ctrl.editAngebot = editAngebot;
+        $ctrl.reset = reset;
+
+
+        $ctrl.successMessage = '';
+        $ctrl.errorMessage = '';
+        $ctrl.done = false;
 
 
         function submit() {
             console.log('Submitting');
-            if (self.angebot.id === undefined || self.angebot.id === null) {
-                console.log('Saving New Angebot', self.angebot);
-                createAngebot(self.angebot);
+            if ($ctrl.angebot.id === undefined || $ctrl.angebot.id === null) {
+                console.log('Saving New Angebot', $ctrl.angebot);
+                createAngebot($ctrl.angebot);
             } else {
-                updateAngebot(self.angebot, self.angebot.id);
-                console.log('Angebot updated with id ', self.angebot.id);
+                updateAngebot($ctrl.angebot, $ctrl.angebot.id);
+                console.log('Angebot updated with id ', $ctrl.angebot.id);
             }
         }
-
+        
 
         function createAngebot(angebot) {
             console.log('About to create angebot');
@@ -38,16 +47,16 @@ angular.module('crudApp').controller('AngebotController',
                 .then(
                     function (response) {
                         console.log('Angebot created successfully');
-                        self.successMessage = 'Angebot created successfully';
-                        self.errorMessage='';
-                        self.done = true;
-                        self.angebot={};
+                        $ctrl.successMessage = 'Angebot created successfully';
+                        $ctrl.errorMessage='';
+                        $ctrl.done = true;
+                        $ctrl.angebot={};
                         $scope.myForm.$setPristine();
                     },
                     function (errResponse) {
                         console.error('Error while creating Angebot');
-                        self.errorMessage = 'Error while creating Angebot .... :(: ' + errResponse.data.errorMessage;
-                        self.successMessage='';
+                        $ctrl.errorMessage = 'Error while creating Angebot .... :(: ' + errResponse.data.errorMessage;
+                        $ctrl.successMessage='';
                     }
                 );
         }
@@ -58,15 +67,15 @@ angular.module('crudApp').controller('AngebotController',
                 .then(
                     function (response){
                         console.log('Angebot updated successfully');
-                        self.successMessage='Angebot updated successfully';
-                        self.errorMessage='';
-                        self.done = true;
+                        $ctrl.successMessage='Angebot updated successfully';
+                        $ctrl.errorMessage='';
+                        $ctrl.done = true;
                         $scope.myForm.$setPristine();
                     },
                     function(errResponse){
                         console.error('Error while updating Angebot');
-                        self.errorMessage='Error while updating Angebot '+errResponse.data;
-                        self.successMessage='';
+                        $ctrl.errorMessage='Error while updating Angebot '+errResponse.data;
+                        $ctrl.successMessage='';
                     }
                 );
         }
@@ -88,13 +97,22 @@ angular.module('crudApp').controller('AngebotController',
             return AngebotService.getAllAngebote();
         }
 
+        function getAllKundes() {
+            return KundeService.getAllKundes();
+
+        }
+
+        function submitKunde(){
+            KundeService.createKunde();
+        }
+
 
         function editAngebot(id) {
-            self.successMessage='';
-            self.errorMessage='';
+            $ctrl.successMessage='';
+            $ctrl.errorMessage='';
             AngebotService.getAngebot(id).then(
                 function (angebot) {
-                    self.angebot = angebot;
+                    $ctrl.angebot = angebot;
                 },
                 function (errResponse) {
                     console.error('Error while removing angebot ' + id + ', Error :' + errResponse.data);
@@ -104,11 +122,11 @@ angular.module('crudApp').controller('AngebotController',
 
 
         function getAngebot(id){
-            self.successMessage='';
-            self.errorMessage='';
+            $ctrl.successMessage='';
+            $ctrl.errorMessage='';
             return AngebotService.getAngebot(id).then(
                 function(angebot){
-                    self.angebot = angebot;
+                    $ctrl.angebot = angebot;
                 },
                 function (errResponse){
                     console.error('Error while finding angebot ' + id + ', Error : ' + errResponse.data);
@@ -119,12 +137,134 @@ angular.module('crudApp').controller('AngebotController',
 
 
         function reset(){
-            self.successMessage='';
-            self.errorMessage='';
-            self.angebot={};
+            $ctrl.successMessage='';
+            $ctrl.errorMessage='';
+            $ctrl.angebot={};
             $scope.myForm.$setPristine(); //reset Form
         }
 
-    }
+        //  $ctrl.items = ['item1', 'item2', 'item3'];
 
-    ]);
+        $ctrl.animationsEnabled = true;
+
+        $ctrl.openModalKunde = function (size) {
+            var modalInstance = $uibModal.open({
+                animation: $ctrl.animationsEnabled,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'myModalKundeContent.html',
+                controller: 'ModalKundeInstanceCtrl',
+                controllerAs: '$ctrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        console.log("zeile 154");
+                        return $ctrl.getAllKundes();
+                        // return $ctrl.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $ctrl.selected = selectedItem;
+                console.log("zeile 161");
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+        /* $ctrl.openComponentModal = function () {
+             var modalInstance = $uibModal.open({
+                 animation: $ctrl.animationsEnabled,
+                 component: 'modalComponent',
+                 resolve: {
+                     items: function () {
+                         //return $ctrl.items;
+                         console.log("zeile 175");
+                         return $ctrl.getAllContainers();
+                     }
+                 }
+             });
+ 
+             modalInstance.result.then(function (selectedItem) {
+                 $ctrl.selected = selectedItem;
+             }, function () {
+                 $log.info('modal-component dismissed at: ' + new Date());
+             });
+         };*/
+
+        /* $ctrl.openMultipleModals = function () {
+             $uibModal.open({
+                 animation: $ctrl.animationsEnabled,
+                 ariaLabelledBy: 'modal-title-bottom',
+                 ariaDescribedBy: 'modal-body-bottom',
+                 templateUrl: 'stackedModal.html',
+                 size: 'sm',
+                 controller: function ($scope) {
+                     $scope.name = 'bottom';
+                 }
+             });
+ 
+             $uibModal.open({
+                 animation: $ctrl.animationsEnabled,
+                 ariaLabelledBy: 'modal-title-top',
+                 ariaDescribedBy: 'modal-body-top',
+                 templateUrl: 'stackedModal.html',
+                 size: 'sm',
+                 controller: function ($scope) {
+                     $scope.name = 'top';
+                 }
+             });
+         };*/
+
+        /* $ctrl.toggleAnimation = function () {
+             $ctrl.animationsEnabled = !$ctrl.animationsEnabled;
+         };*/
+    }]);
+
+// Please note that $uibModalInstance represents a modal window (instance) dependency.
+// It is not the same as the $uibModal service used above.
+
+angular.module('crudApp').controller('ModalKundeInstanceCtrl', function ($uibModalInstance, items) {
+    var $ctrl = this;
+    $ctrl.items = items;
+    $ctrl.selected = {
+        item: $ctrl.items[0]
+    };
+
+    $ctrl.ok = function () {
+        $uibModalInstance.close($ctrl.selected.item);
+    };
+
+    $ctrl.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
+// Please note that the close and dismiss bindings are from $uibModalInstance.
+
+angular.module('crudApp').component('modalComponent', {
+    templateUrl: 'myModalKundeContent.html',
+    bindings: {
+        resolve: '<',
+        close: '&',
+        dismiss: '&'
+    },
+    controller: function () {
+        var $ctrl = this;
+        $ctrl.$onInit = function () {
+            $ctrl.items = $ctrl.resolve.items;
+            $ctrl.selected = {
+                item: $ctrl.items[0]
+            };
+        };
+
+        $ctrl.ok = function () {
+            $ctrl.close({$value: $ctrl.selected.item});
+        };
+
+        $ctrl.cancel = function () {
+            $ctrl.dismiss({$value: 'cancel'});
+        };
+    }
+});
