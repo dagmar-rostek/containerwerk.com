@@ -1,4 +1,4 @@
-<div ng-controller="ModalDemoCtrl as $ctrl" ng-class="{ active: $state.includes('modul') }">
+<div ng-controller="ModalDemoCtrl as $ctrl">
     <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading"><span class="lead">CONTAINERWERK.COM </span></div>
@@ -58,7 +58,7 @@
                                     </div>
                             </script>
                             <select class="form-control" ng-model="selectedIndex"
-                                    ng-change="$ctrl.openComponentModal('lg'); $ctrl.selected.item = item"
+                                    ng-change="$ctrl.openModal('lg'); $ctrl.selected.item = item"
                                     ng-options="item as item.modul for item in ctrl.getAllContainers()">
                                 <option value="" ng-hide="selectedIndex">Bitte wählen Sie ein Modul aus ...</option>
                             </select>
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div ui-view></div>
-                        <div ui-view="nutzungsart"></div>
+                       <#-- <div ui-view="nutzungsart"></div>-->
                     </div>
                 </div>
                 <div class="row">
@@ -85,9 +85,7 @@
                         <button type="button" ng-click="ctrl.reset()" class="btn btn-warning  custom-width"
                                 ng-disabled="myForm.$pristine">ZURÜCK
                         </button>
-                        <button type="button" ng-click="ctrl.getAllNutzungsarts()"
-                                ui-sref="modul" class="btn btn-success custom-width">WEITER
-                        </button>
+                        <a ui-sref="nutzungsart" ng-click="ctrl.submit()" class="btn btn-success custom-width"> WEITER </a>
                     </div>
                 </div>
 
