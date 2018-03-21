@@ -73,6 +73,10 @@
 <script src="js/app/configurator.js"></script>
 <script src="js/utils/utils-service.js"></script>
 <script src="js/app/ModalDemoCtrl.js"></script>
+<script src="js/app/KundeController.js"></script>
+<script src="js/app/KundeService.js"></script>
+<script src="js/app/NutzungsartController.js"></script>
+<script src="js/app/NutzungsartService.js"></script>
 <script src="js/app/ProjektinformationenController.js"></script>
 <script src="js/app/LoginService.js"></script>
 <script src="js/app/LoginController.js"></script>
@@ -80,6 +84,8 @@
 <script src="js/app/ModulController.js"></script>
 <script src="js/app/AngebotService.js"></script>
 <script src="js/app/AngebotController.js"></script>
+<script src="js/app/ConfiguratorService.js"></script>
+<script src="js/app/ConfiguratorController.js"></script>
 <script src="js/app/ContainerService.js"></script>
 <script src="js/app/UserService.js"></script>
 <script src="js/app/UserController.js"></script>
