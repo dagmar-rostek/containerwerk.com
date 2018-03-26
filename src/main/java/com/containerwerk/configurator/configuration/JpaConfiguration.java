@@ -25,13 +25,17 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.containerwerk.configurator.repositories",
 		entityManagerFactoryRef = "entityManagerFactory",
 		transactionManagerRef = "transactionManager")
 @EnableTransactionManagement
-public class JpaConfiguration {
+public class JpaConfiguration extends WebMvcConfigurerAdapter {
+
 
 	@Autowired
 	private Environment environment;
@@ -39,6 +43,18 @@ public class JpaConfiguration {
 	@Value("${datasource.sampleapp.maxPoolSize:10}")
 	private int maxPoolSize;
 
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurerAdapter() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+						.allowedOrigins("*")
+						.allowedHeaders("*")
+						.allowedMethods("*");
+			}
+		};
+	}
 	/*
 	 * Populate SpringBoot DataSourceProperties object directly from application.yml 
 	 * based on prefix.Thanks to .yml, Hierachical data is mapped out of the box with matching-name

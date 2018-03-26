@@ -46,22 +46,7 @@ app.config(
             // Redirects and Otherwise //
             /////////////////////////////
 
-
-           /* $routeProvider.when('/container/:angebot.id ',
-                {
-                    templateUrl: 'partials/container',
-                    controller: 'ModalDemoCtrl'
-                });
-*/
-            // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
             $urlRouterProvider
-
-               /* .when('/kunde/',
-                    {
-                        templateUrl: 'partials/kunde',
-                        controller: 'KundeController'
-                    }
-                )*/
 
                 // If the url is ever invalid, e.g. '/asdf', then redirect to '/' aka the home state
                 .otherwise('/');
