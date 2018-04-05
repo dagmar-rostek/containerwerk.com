@@ -10,7 +10,8 @@ angular.module('crudApp').factory('ContainerService',
                 getContainer: getContainer,
                 createContainer: createContainer,
                 updateContainer: updateContainer,
-                removeContainer: removeContainer
+                removeContainer: removeContainer,
+                getIdContainer: getIdContainer
             };
 
             return factory;
@@ -21,7 +22,7 @@ angular.module('crudApp').factory('ContainerService',
                 $http.get(urls.CONTAINER_SERVICE_API)
                     .then(
                         function (response) {
-                            console.log('Fetched successfully all container');
+                            console.log('Fetched successfully all container in ContainerService');
                             $localStorage.containers = response.data;
                             deferred.resolve(response);
                         },
@@ -36,8 +37,25 @@ angular.module('crudApp').factory('ContainerService',
             }
 
             function getAllContainers() {
-                console.log('Get all containers ');
+                console.log('Get all containers im Service');
                 return $localStorage.containers;
+            }
+
+            function getIdContainer(container){
+                console.log('Get Container with container ' + container);
+                var deferred = $q.defer();
+                $http.get(urls.CONTAINER_SERVICE_API + container)
+                    .then(
+                        function(response){
+                            console.log('Fetched successfully id from container: ' + id);
+                            deferred.resolve(response.data);
+                        },
+                        function (errResponse) {
+                            console.error('Error while loading id from container' + id);
+                            deferred.reject(errResponse)
+                        }
+                    );
+                return deferred.promise;
             }
 
             function getContainer(id) {
@@ -69,7 +87,7 @@ angular.module('crudApp').factory('ContainerService',
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
-                            console.error('Error while creating Container : '+errResponse.data.errorMessage);
+                            console.error('Error while creating Container in ContainerService : '+errResponse.data.errorMessage);
                             deferred.reject(errResponse);
                         }
                     );

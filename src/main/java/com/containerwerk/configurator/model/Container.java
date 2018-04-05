@@ -4,6 +4,7 @@ package com.containerwerk.configurator.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,22 +12,22 @@ import java.util.Objects;
 @Table(name="APP_CONT")
 public class Container implements Serializable{
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
+    @NotNull
     @Column(name="MODUL", nullable = false)
     private String modul;
 
-    @NotEmpty
+    @NotNull
     @Column(name="imageID", nullable = false)
     private String imageID;
 
-    @NotEmpty
+    @NotNull
     @Column(name="preis", nullable = false)
     private Double preis;
 
-    @NotEmpty
+    @NotNull
     @Column(name="beschreibung", nullable = false)
     private String beschreibung;
 
@@ -40,7 +41,10 @@ public class Container implements Serializable{
     private Double gesamtpreis;
 
     @Column(name="ispreisrelevant")
-    private boolean isPreisrelevant;
+    private boolean ispreisrelevant;
+
+    @Column(name="nutzungsart")
+    private Nutzungsart nutzungsart;
 
     public Long getId() {
         return id;
@@ -93,6 +97,9 @@ public class Container implements Serializable{
     }
 
     public Integer getAnzahl() {
+        if(anzahl == null){
+            anzahl = 1;
+        }
         return anzahl;
     }
 
@@ -101,7 +108,7 @@ public class Container implements Serializable{
     }
 
     public Double getGesamtpreis() {
-        return this.anzahl * this.preis;
+        return getAnzahl() * this.preis;
     }
 
     public void setGesamtpreis(Double gesamtpreis) {
@@ -109,11 +116,28 @@ public class Container implements Serializable{
     }
 
     public boolean isPreisrelevant() {
-        return isPreisrelevant;
+        return ispreisrelevant;
     }
 
     public void setPreisrelevant(boolean preisrelevant) {
-        isPreisrelevant = preisrelevant;
+        ispreisrelevant = preisrelevant;
+    }
+
+    public boolean isIspreisrelevant() {
+        return ispreisrelevant;
+    }
+
+    public void setIspreisrelevant(boolean ispreisrelevant) {
+        this.ispreisrelevant = ispreisrelevant;
+    }
+
+    @OneToOne(targetEntity=Nutzungsart.class, mappedBy = "nutzungsart")
+    public Nutzungsart getNutzungsart() {
+        return nutzungsart;
+    }
+
+    public void setNutzungsart(Nutzungsart nutzungsart) {
+        this.nutzungsart = nutzungsart;
     }
 
     @Override
@@ -121,7 +145,7 @@ public class Container implements Serializable{
         if (this == o) return true;
         if (!(o instanceof Container)) return false;
         Container container = (Container) o;
-        return isPreisrelevant() == container.isPreisrelevant() &&
+        return isIspreisrelevant() == container.isIspreisrelevant() &&
                 Objects.equals(getId(), container.getId()) &&
                 Objects.equals(getModul(), container.getModul()) &&
                 Objects.equals(getImageID(), container.getImageID()) &&
@@ -129,27 +153,29 @@ public class Container implements Serializable{
                 Objects.equals(getBeschreibung(), container.getBeschreibung()) &&
                 Objects.equals(getAnzahl(), container.getAnzahl()) &&
                 Objects.equals(getAngebot(), container.getAngebot()) &&
-                Objects.equals(getGesamtpreis(), container.getGesamtpreis());
+                Objects.equals(getGesamtpreis(), container.getGesamtpreis()) &&
+                Objects.equals(getNutzungsart(), container.getNutzungsart());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getId(), getModul(), getImageID(), getPreis(), getBeschreibung(), getAnzahl(), getAngebot(), getGesamtpreis(), isPreisrelevant());
+        return Objects.hash(getId(), getModul(), getImageID(), getPreis(), getBeschreibung(), getAnzahl(), getAngebot(), getGesamtpreis(), isIspreisrelevant(), getNutzungsart());
     }
 
     @Override
     public String toString() {
         return "Container{" +
                 "id=" + id +
-                ", modul=" + modul +
+                ", modul='" + modul + '\'' +
                 ", imageID='" + imageID + '\'' +
                 ", preis=" + preis +
                 ", beschreibung='" + beschreibung + '\'' +
                 ", anzahl=" + anzahl +
                 ", angebot=" + angebot +
                 ", gesamtpreis=" + gesamtpreis +
-                ", isPreisrelevant=" + isPreisrelevant +
+                ", ispreisrelevant=" + ispreisrelevant +
+                ", nutzungsart=" + nutzungsart +
                 '}';
     }
 }

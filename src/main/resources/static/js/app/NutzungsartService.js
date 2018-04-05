@@ -10,7 +10,8 @@ angular.module('crudApp').factory('NutzungsartService',
                 getNutzungsart: getNutzungsart,
                 createNutzungsart: createNutzungsart,
                 updateNutzungsart: updateNutzungsart,
-                removeNutzungsart: removeNutzungsart
+                removeNutzungsart: removeNutzungsart,
+                getModulOfNutzungsart: getModulOfNutzungsart
             };
 
             return factory;
@@ -36,6 +37,24 @@ angular.module('crudApp').factory('NutzungsartService',
             function getAllNutzungsarts(){
                 return $localStorage.nutzungsarts;
             }
+
+            function getModulOfNutzungsart(idModul) {
+                console.log('Fetching Modul of Nutzungsart with idModul: ' + idModul);
+                var deferred = $q.defer();
+                $http.get(urls.MODUL_SERVICE_API + idModul)
+                    .then(
+                        function(response){
+                            console.log('Fetched successfully Modul of Nutzungsart id: ' +idModul);
+                            deferred.resolve(response.data);
+                        },
+                        function (errResponse) {
+                            console.error('Error while loading modul of Nutzungsart with id: ' +idModul);
+                            deferred.reject(errResponse);
+                        }
+                    );
+                return deferred.promise;
+            }
+
 
             function getNutzungsart(id) {
                 console.log('Fetching Nutzungsart with id :'+id);

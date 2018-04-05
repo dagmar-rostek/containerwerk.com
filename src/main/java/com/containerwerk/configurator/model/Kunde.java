@@ -3,6 +3,7 @@ package com.containerwerk.configurator.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,7 +15,7 @@ public class Kunde implements Serializable {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
+    @NotNull
     @Column(name="name", nullable = false)
     private String name;
 

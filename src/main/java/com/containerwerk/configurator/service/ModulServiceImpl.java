@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service("modulService")
 @Transactional
@@ -22,6 +23,11 @@ public class ModulServiceImpl implements ModulService{
     @Override
     public void saveModul(Modul modul) {
         modulRepository.save(modul);
+    }
+
+    @Override
+    public Long getId(Modul modul){
+        return modul.getId();
     }
 
     @Override

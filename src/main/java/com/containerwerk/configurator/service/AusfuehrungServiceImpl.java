@@ -36,12 +36,12 @@ public class AusfuehrungServiceImpl implements AusfuehrungService {
     }
 
     @Override
-    public void deleteAllAusfuehrungs() {
+    public void deleteAllAusfuehrungen() {
         ausfuehrungRepository.deleteAll();
     }
 
     @Override
-    public List<Ausfuehrung> findAllAusfuehrungs() {
+    public List<Ausfuehrung> findAllAusfuehrungen() {
         return ausfuehrungRepository.findAll();
     }
 

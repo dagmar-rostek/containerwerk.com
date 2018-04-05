@@ -19,4 +19,6 @@ public interface ContainerService {
     List<Container> findAllContainers();
 
     boolean isContainerExist(Container container);
+
+    Long getId(Container container);
 }

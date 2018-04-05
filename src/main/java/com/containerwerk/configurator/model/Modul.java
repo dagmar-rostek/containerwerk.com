@@ -10,11 +10,9 @@ import java.util.Objects;
 @Table(name="APP_MODU")
 public class Modul implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
-    @Column(name="modul", nullable = false)
+    @Column(name="modul")
     private String modul;
 
     @Column(name="beschreibung")
@@ -25,9 +23,6 @@ public class Modul implements Serializable {
 
     @Column(name="preis")
     private Double preis;
-
-    @Column(name="nutzungsart")
-    private Nutzungsart nutzungsart;
 
     public Long getId() {
         return id;
@@ -71,14 +66,6 @@ public class Modul implements Serializable {
     }
 
 
-    public Nutzungsart getNutzungsart() {
-        return nutzungsart;
-    }
-
-    public void setNutzungsart(Nutzungsart nutzungsart) {
-        this.nutzungsart = nutzungsart;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,14 +75,13 @@ public class Modul implements Serializable {
                 Objects.equals(getModul(), modul1.getModul()) &&
                 Objects.equals(getBeschreibung(), modul1.getBeschreibung()) &&
                 Objects.equals(getImageID(), modul1.getImageID()) &&
-                Objects.equals(getPreis(), modul1.getPreis()) &&
-                Objects.equals(getNutzungsart(), modul1.getNutzungsart());
+                Objects.equals(getPreis(), modul1.getPreis()) ;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getId(), getModul(), getBeschreibung(), getImageID(), getPreis(), getNutzungsart());
+        return Objects.hash(getId(), getModul(), getBeschreibung(), getImageID(), getPreis());
     }
 
     @Override
@@ -106,7 +92,7 @@ public class Modul implements Serializable {
                 ", beschreibung='" + beschreibung + '\'' +
                 ", imageID='" + imageID + '\'' +
                 ", preis=" + preis +
-                ", nutzungsart=" + nutzungsart +
+                ", nutzungsart="  +
                 '}';
     }
 }

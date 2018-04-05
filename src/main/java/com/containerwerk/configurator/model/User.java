@@ -3,6 +3,7 @@ package com.containerwerk.configurator.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -13,7 +14,7 @@ public class User implements Serializable{
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty
+	@NotNull
 	@Column(name="NAME", nullable=false)
 	private String name;
 

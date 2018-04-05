@@ -1,8 +1,10 @@
 package com.containerwerk.configurator.model;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,10 +13,12 @@ import java.util.Objects;
 public class Einrichtung implements Serializable  {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="kaugen" , strategy="increment")
+    @GeneratedValue(generator="kaugen")
+   // @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
+    @NotNull
     @Column(name="typ", nullable=false)
     private String typ;
 

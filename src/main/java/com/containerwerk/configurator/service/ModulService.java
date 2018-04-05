@@ -9,6 +9,8 @@ public interface ModulService {
 
     void saveModul(Modul modul);
 
+    Long getId(Modul modul);
+
     void updateModul(Modul modul);
 
     void deleteModulById(Long id);

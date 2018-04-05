@@ -47,4 +47,9 @@ public class ContainerServiceImpl implements ContainerService {
     public boolean isContainerExist(Container container) {
         return findById(container.getId()) != null;
     }
+
+    @Override
+    public Long getId(Container container) {
+        return container.getId();
+    }
 }

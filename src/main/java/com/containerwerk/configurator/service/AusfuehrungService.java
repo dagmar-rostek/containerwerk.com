@@ -14,9 +14,9 @@ public interface AusfuehrungService {
 
     void deleteAusfuehrungById(Long id);
 
-    void deleteAllAusfuehrungs();
+    void deleteAllAusfuehrungen();
 
-    List<Ausfuehrung> findAllAusfuehrungs();
+    List<Ausfuehrung> findAllAusfuehrungen();
 
     boolean isAusfuehrungExist(Ausfuehrung ausfuehrung);
 }

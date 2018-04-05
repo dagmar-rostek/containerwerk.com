@@ -4,8 +4,8 @@ angular.module('crudApp').factory('AusfuehrungService',
     ['$localStorage', '$http', '$q', 'urls',
         function ($localStorage, $http, $q, urls) {
             var factory = {
-                loadAllAusfuehrunge: loadAllAusfuehrunge,
-                getAllAusfuehrunge: getAllAusfuehrunge,
+                loadAllAusfuehrungen: loadAllAusfuehrungen,
+                getAllAusfuehrungen: getAllAusfuehrungen,
                 getAusfuehrung: getAusfuehrung,
                 createAusfuehrung: createAusfuehrung,
                 updateAusfuehrung: updateAusfuehrung,
@@ -14,18 +14,18 @@ angular.module('crudApp').factory('AusfuehrungService',
 
             return factory;
 
-            function loadAllAusfuehrunge() {
-                console.log('Fetching all ausfuehrunge');
+            function loadAllAusfuehrungen() {
+                console.log('Fetching all ausfuehrungen');
                 var deferred = $q.defer();
                 $http.get(urls.ANGEBOT_SERVICE_API)
                     .then(
                         function (response) {
-                            console.log('Fetched successfully all ausfuehrunge');
-                            $localStorage.ausfuehrunge = response.data;
+                            console.log('Fetched successfully all ausfuehrungen');
+                            $localStorage.ausfuehrungen = response.data;
                             deferred.resolve(response);
                         },
                         function (errResponse) {
-                            console.error('Error while loading ausfuehrunge');
+                            console.error('Error while loading ausfuehrungen');
                             deferred.reject(errResponse);
                         }
                     )
@@ -33,8 +33,8 @@ angular.module('crudApp').factory('AusfuehrungService',
                 return deferred.promise;
             }
 
-            function getAllAusfuehrunge() {
-                return $localStorage.ausfuehrunge;
+            function getAllAusfuehrungen() {
+                return $localStorage.ausfuehrungen;
             }
 
             function getAusfuehrung(id) {

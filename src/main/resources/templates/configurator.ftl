@@ -1,5 +1,12 @@
 <div class="generic-container" >
     <div class="panel panel-default">
+        <input type="hidden" ng-model="$ctrl.container.id"/>
+        <input type="hidden" ng-model="$ctrl.container.modul"/>
+        <input type="hidden" ng-model="$ctrl.container.imageID"/>
+        <input type="hidden" ng-model="$ctrl.container.preis"/>
+        <input type="hidden" ng-model="$ctrl.container.beschreibung"/>
+        <input type="hidden" ng-model="$ctrl.container.angebot"/>
+        <input type="hidden" ng-model="$ctrl.container.gesamtpreis"/>
         <!-- Default panel contents -->
         <div class="panel-heading"><span class="lead">CONTAINERWERK.COM </span></div>
         <div class="panel-body">
@@ -25,7 +32,9 @@
                 <div class="form-actions floatRight">
 <#--                  <input type="submit" value="WEITER" ng-click="ctrl.submit"
                          class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid || myForm.$pristine" ui-sref="container">-->
-                   <a ui-sref="container" ng-click="ctrl.submit()" class="btn btn-success custom-width"> WEITER </a>
+                   <a ui-sref="container" class="btn btn-success custom-width"> WEITER </a>
+
+   <#-- <a ui-sref="container" ng-click="ctrl.submit()" class="btn btn-success custom-width"> WEITER </a>-->
                   <#--  <input type="submit" value="{{!ctrl.angebot.id ? 'WEITER' : 'WEITER'}}"
                         class="btn btn-primary btn-sm">-->
                 </div>

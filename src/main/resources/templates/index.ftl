@@ -82,10 +82,12 @@
 <script src="js/app/LoginController.js"></script>
 <script src="js/app/ModulService.js"></script>
 <script src="js/app/ModulController.js"></script>
+<script src="js/app/AusfuehrungService.js"></script>
 <script src="js/app/AngebotService.js"></script>
 <script src="js/app/AngebotController.js"></script>
 <script src="js/app/ConfiguratorService.js"></script>
 <script src="js/app/ConfiguratorController.js"></script>
+<script src="js/app/ContainerController.js"></script>
 <script src="js/app/ContainerService.js"></script>
 <script src="js/app/UserService.js"></script>
 <script src="js/app/UserController.js"></script>

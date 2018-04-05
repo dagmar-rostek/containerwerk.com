@@ -5,10 +5,10 @@ angular.module('crudApp').controller('AusfuehrungController',
 
         var self = this;
         self.ausfuehrung = {};
-        self.ausfuehrunge = [];
+        self.ausfuehrungen = [];
 
         self.submit = submit;
-        self.getAllAusfuehrunge = getAllAusfuehrunge;
+        self.getAllAusfuehrungen = getAllAusfuehrungen;
         self.getAusfuehrung= getAusfuehrung;
         self.createAusfuehrung = createAusfuehrung;
         self.updateAusfuehrung = updateAusfuehrung;
@@ -85,8 +85,8 @@ angular.module('crudApp').controller('AusfuehrungController',
                 );
         }
 
-        function getAllAusfuehrunge() {
-            return AusfuehrungService.getAllAusfuehrunge();
+        function getAllAusfuehrungen() {
+            return AusfuehrungService.getAllAusfuehrungen();
         }
 
 

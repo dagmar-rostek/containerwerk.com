@@ -89,8 +89,21 @@ public class RestApiController {
 	}
 
 
+    //--------------- Retrieve a id of Container ------------------ //
+    @RequestMapping(value = "/container/{container}", method = RequestMethod.GET)
+    public ResponseEntity<?> getContainer(@PathVariable("container") Container container) {
+        logger.info("Fetching Container id {}", container);
+        Long id = containerService.getId(container);
+        if (id == null) {
+            logger.error("Container id {} not found for container.", container);
+            return new ResponseEntity(new CustomErrorType("Container id " + container
+                    + " not found"), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Long>(id, HttpStatus.OK);
+    }
 
-	//--------------- Retrieve a single Container ------------------ //
+
+    //--------------- Retrieve a single Container ------------------ //
 	@RequestMapping(value = "/container/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getContainer(@PathVariable("id") long id) {
 		logger.info("Fetching Container with id {}", id);
@@ -175,11 +188,16 @@ public class RestApiController {
 	public ResponseEntity<?> createContainer(@RequestBody Container container, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating Container : {}", container);
 
-		if (containerService.isContainerExist(container)) {
+		/*if (containerService.isContainerExist(container)) {
 			logger.error("Unable to create. A Container with name {} already exist", container.getId());
 			return new ResponseEntity(new CustomErrorType("Unable to create. A Container with name " +
 					container.getId() + " already exist."),HttpStatus.CONFLICT);
-		}
+		}*/
+		if(container.getAnzahl()!=null){
+            container.setGesamtpreis(container.getPreis()*container.getAnzahl());
+        }else{
+            container.setGesamtpreis(container.getPreis());
+        }
 		containerService.saveContainer(container);
 
 		HttpHeaders headers = new HttpHeaders();
@@ -448,16 +466,16 @@ public class RestApiController {
 
 	////
 
-	// -------------------Retrieve All Ausfuehrungs---------------------------------------------
+	// -------------------Retrieve All Ausfuehrungen---------------------------------------------
 
 	@RequestMapping(value = "/ausfuehrung/", method = RequestMethod.GET)
-	public ResponseEntity<List<Ausfuehrung>> listAllAusfuehrungs() {
-		List<Ausfuehrung> ausfuehrungs = ausfuehrungService.findAllAusfuehrungs();
-		if (ausfuehrungs.isEmpty()) {
+	public ResponseEntity<List<Ausfuehrung>> listAllAusfuehrungen() {
+		List<Ausfuehrung> ausfuehrungen = ausfuehrungService.findAllAusfuehrungen();
+		if (ausfuehrungen.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 			// You many decide to return HttpStatus.NOT_FOUND
 		}
-		return new ResponseEntity<List<Ausfuehrung>>(ausfuehrungs, HttpStatus.OK);
+		return new ResponseEntity<List<Ausfuehrung>>(ausfuehrungen, HttpStatus.OK);
 	}
 
 	// -------------------Retrieve Single Ausfuehrung------------------------------------------
@@ -534,13 +552,13 @@ public class RestApiController {
 		return new ResponseEntity<Ausfuehrung>(HttpStatus.NO_CONTENT);
 	}
 
-	// ------------------- Delete All Ausfuehrungs-----------------------------
+	// ------------------- Delete All Ausfuehrungen-----------------------------
 
 	@RequestMapping(value = "/ausfuehrung/", method = RequestMethod.DELETE)
-	public ResponseEntity<Ausfuehrung> deleteAllAusfuehrungs() {
-		logger.info("Deleting All Ausfuehrungs");
+	public ResponseEntity<Ausfuehrung> deleteAllAusfuehrungen() {
+		logger.info("Deleting All Ausfuehrungen");
 
-		ausfuehrungService.deleteAllAusfuehrungs();
+		ausfuehrungService.deleteAllAusfuehrungen();
 		return new ResponseEntity<Ausfuehrung>(HttpStatus.NO_CONTENT);
 	}
 
@@ -941,7 +959,7 @@ public class RestApiController {
 	// -------------------Retrieve Single Modul------------------------------------------
 
 	@RequestMapping(value = "/modul/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> getModul(@PathVariable("id") long id) {
+	public ResponseEntity<?> getModul(@PathVariable("id") Long id) {
 		logger.info("Fetching Modul with id {}", id);
 		Modul modul = modulService.findById(id);
 		if (modul == null) {
@@ -950,6 +968,21 @@ public class RestApiController {
 					+ " not found"), HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Modul>(modul, HttpStatus.OK);
+	}
+
+
+	// -------------------Retrieve Single id of Module------------------------------------------
+
+	@RequestMapping(value = "/id/", method = RequestMethod.GET)
+	public ResponseEntity<?> getId(@PathVariable("modul") Modul modul) {
+		logger.info("Fetching id with modul {}", modul);
+		Long id = modulService.getId(modul);
+		if (id == null) {
+			logger.error("id from module {} not found.", modul);
+			return new ResponseEntity(new CustomErrorType("Id from module " + modul
+					+ " not found"), HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}
 
 	// -------------------Create a Modul-------------------------------------------
@@ -971,10 +1004,12 @@ public class RestApiController {
 	}
 
 
+
+
 	// ------------------- Update a Modul ------------------------------------------------
 
 	@RequestMapping(value = "/modul/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateModul(@PathVariable("id") long id, @RequestBody Modul modul) {
+	public ResponseEntity<?> updateModul(@PathVariable("id") Long id, @RequestBody Modul modul) {
 		logger.info("Updating Modul with id {}", id);
 
 		Modul currentModul = modulService.findById(id);
@@ -997,7 +1032,7 @@ public class RestApiController {
 	// ------------------- Delete a Modul-----------------------------------------
 
 	@RequestMapping(value = "/modul/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteModul(@PathVariable("id") long id) {
+	public ResponseEntity<?> deleteModul(@PathVariable("id") Long id) {
 		logger.info("Fetching & Deleting Modul with id {}", id);
 
 		Modul modul = modulService.findById(id);
@@ -1053,11 +1088,11 @@ public class RestApiController {
 	public ResponseEntity<?> createNutzungsart(@RequestBody Nutzungsart nutzungsart, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating Nutzungsart : {}", nutzungsart);
 
-		if (nutzungsartService.isNutzungsartExist(nutzungsart)) {
+	/*	if (nutzungsartService.isNutzungsartExist(nutzungsart)) {
 			logger.error("Unable to create. A Nutzungsart with id {} already exist", nutzungsart.getId());
 			return new ResponseEntity(new CustomErrorType("Unable to create. A Nutzungsart with name " +
 					nutzungsart.getId() + " already exist."),HttpStatus.CONFLICT);
-		}
+		}*/
 		nutzungsartService.saveNutzungsart(nutzungsart);
 
 		HttpHeaders headers = new HttpHeaders();

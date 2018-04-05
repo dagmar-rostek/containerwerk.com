@@ -7,7 +7,7 @@ var app = angular.module('crudApp', [
     'ui.router',
     'ngStorage',
     'ui.router.stateHelper',
-    //'ngRoute',
+    'ngRoute',
     'ui.bootstrap'
 
 ]);
@@ -35,6 +35,7 @@ app.constant('urls', {
     CONTAINER_SERVICE_API: 'http://localhost:8080/api/container/',
     MODUL_SERVICE_API: 'http://localhost:8080/api/modul/',
     NUTZUNGSART_SERVICE_API: 'http://localhost:8080/api/nutzungsart/',
+    AUSFUEHRUNGEN_SERVICE_API: 'http://localhost:8080/api/ausfuehrung/',
     PROJEKTINFORMATIONEN_SERVICE_API: 'http://localhost:8080/api/projektinformationen/'
 });
 
@@ -110,13 +111,30 @@ app.config(
                     name: 'nutzungsart',
                     url: '/nutzungsart',
                     templateUrl: 'partials/nutzungsart',
-                    controller: 'NutzungsartController',
+                    controller: 'ContainerController',
                     controllerAs: 'ctrl',
+                    parent: 'container',
                     resolve: {
-                        containers: function ($q, NutzungsartService) {
-                            console.log('Load all container');
+                        nutzungsarts: function ($q, NutzungsartService) {
+                            console.log('Load all nutzungsarts');
                             var deferred = $q.defer();
                             NutzungsartService.loadAllNutzungsarts().then(deferred.resolve, deferred.resolve);
+                            return deferred.promise;
+                        }
+                    }
+                })
+                .state({
+                    name: 'ausfuehrung',
+                    url: '/ausfuehrung',
+                    templateUrl: 'partials/ausfuehrung',
+                    controller: 'ContainerController',
+                    controllerAs: 'ctrl',
+                    parent: 'container',
+                    resolve: {
+                        ausfuehrungen: function ($q, AusfuehrungService) {
+                            console.log('Load all ausfuehrungen');
+                            var deferred = $q.defer();
+                            AusfuehrungService.loadAllAusfuehrungen().then(deferred.resolve, deferred.resolve);
                             return deferred.promise;
                         }
                     }
@@ -139,42 +157,24 @@ app.config(
                 .state({
                     name: 'container',
                     url: '/container',
-
+                    params:{
+                        'id':'id'
+                    },
                     templateUrl: 'partials/container',
-                    controller: 'ModalDemoCtrl',
+                    controller: 'ContainerController',
                     controllerAs: 'ctrl',
                     resolve: {
-                        containers: function ($q, ContainerService) {
-                            console.log('Load all container');
+                        moduls: function ($q, ModulService) {
+                            console.log('Load all moduls');
+                            var deferred = $q.defer();
+                            ModulService.loadAllModuls().then(deferred.resolve, deferred.resolve);
+                            return deferred.promise;
+                        },
+                        containers: function($q, ContainerService){
+                            console.log('load all containers');
                             var deferred = $q.defer();
                             ContainerService.loadAllContainers().then(deferred.resolve, deferred.resolve);
                             return deferred.promise;
-
-                            //,
-                            //  the child views (absolutely named)
-
-                            /* // for column #1, defines a separate controller
-                             'modul@container': {
-                                 templateUrl: 'partials/modul',
-                                 controller: 'AngebotController',
-                                 controllerAs: 'ctrl',
-                                 resolve: {
-                                     containers: function ($q, ContainerService) {
-                                         console.log('Load all container');
-                                         var deferred = $q.defer();
-                                         ContainerService.loadAllContainers().then(deferred.resolve, deferred.resolve);
-                                         return deferred.promise;
-                                     }
-                                 },
-                                 //  the child views (absolutely named)
-
-                                 // for column #1, defines a separate controller
-                                  'nutzungsart@container': {
-                                      templateUrl: 'partials/nutzungsart',
-                                      controller: 'NutzungsartController',
-                                      controllerAs: 'ctrl'
-                                  }
-                             }*/
                         }
 
 

@@ -106,4 +106,16 @@ angular.module('crudApp').factory('ModulService',
             }
 
         }
-    ]);
+    ])
+    .service('sharedProperties', function(){
+        var property = 'id';
+
+        return{
+            getProperty: function(){
+                return property;
+            },
+            setProperty: function(value){
+                property = value;
+            }
+        };
+    });

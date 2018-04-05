@@ -1,8 +1,10 @@
 package com.containerwerk.configurator.model;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -12,10 +14,12 @@ import java.util.Objects;
 public class Ausfuehrung implements Serializable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GenericGenerator(name="kaugen" , strategy="increment")
+    @GeneratedValue(generator="kaugen")
+    //@GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
+    @NotNull
     @Column(name="typ", nullable=false)
     private String typ;
 
@@ -76,7 +80,7 @@ public class Ausfuehrung implements Serializable {
         this.preis = preis;
     }
 
-    @OneToMany(targetEntity=Feature.class, mappedBy = "feature")
+    @OneToOne(targetEntity=Feature.class, mappedBy = "feature")
     public List<Feature> getFeatureList() {
         return featureList;
     }
