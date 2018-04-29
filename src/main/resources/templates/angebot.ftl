@@ -4,7 +4,8 @@
         <div class="panel-heading"><span class="lead">Angebot </span></div>
         <div class="panel-body">
             <div class="formcontainer">
-                <div class="alert alert-success" role="alert" ng-if="$ctrl.successMessage">{{$ctrl.successMessage}}</div>
+                <div class="alert alert-success" role="alert" ng-if="$ctrl.successMessage">{{$ctrl.successMessage}}
+                </div>
                 <div class="alert alert-danger" role="alert" ng-if="$ctrl.errorMessage">{{$ctrl.errorMessage}}</div>
                 <form ng-submit="$ctrl.submit()" name="myForm" class="form-horizontal">
                     <input type="hidden" ng-model="$ctrl.angebot.id"/>
@@ -16,6 +17,18 @@
 
                     <div class="row">
                         <div class="form-group col-md-12">
+
+                        <#--<label class="col-md-2 control-lable" for="name">Angebotsname</label>
+                        <div class="col-md-7">
+                            <input type="text" ng-model="$ctrl.angebot.name" id="name" list="names">
+                            <datalist id="names" class="form-control" ng-model="$ctrl.angebot.name"
+                                      ng-hide="true" >
+
+                                    <option ng-repeat="option in contacts | filter:search "
+                                            value="{{option.name}}" ng-hide="true" ></option>
+
+                            </datalist>
+-->
                             <label class="col-md-2 control-lable" for="name">Angebotsname</label>
                             <div class="col-md-7">
                                 <input type="text" ng-model="$ctrl.angebot.name" id="name"
@@ -24,6 +37,8 @@
                             </div>
                         </div>
                     </div>
+
+
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label class="col-md-2 control-lable" for="beschreibung">Beschreibung</label>
@@ -55,12 +70,11 @@
                     </div>
 
 
-                    <div class="modal-demo">
+                    <div class="modal-demo1">
 
-                        <script type="text/ng-template" id="myModalKundeContent.html" >
+                        <script type="text/ng-template" id="myModalKundeContent.html">
                             <div class="modal-header">
-                                <h3 class="modal-title" id="modal-title">Wählen Sie einen Kunden oder legen Sie
-                                    einen neuen Kunden an</h3>
+                                <h3 class="modal-title" id="modal-title">Wählen Sie einen Kunden aus</h3>
                             </div>
                             <div class="modal-body" id="modal-body">
                                 <div class="table-responsive">
@@ -73,7 +87,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-repeat="item in $ctrl.items" ng-click="$event.preventDefault(); $ctrl.selected.item = item">
+                                        <tr ng-repeat="item in $ctrl.items"
+                                            ng-click="$event.preventDefault(); $ctrl.selected.item = item"
+                                            >
                                             <td>{{item.id}}</td>
                                             <td>{{item.name}}</td>
                                             <td>{{item.ansprechpartner}}</td>
@@ -96,12 +112,10 @@
                                 <label class="col-md-2 control-lable"
                                        for="ansprechpartner">Kunde</label>
                                 <div class="col-md-7">
-                                    <select class="form-control" ng-model="selectedIndex"
-                                            ng-change="$ctrl.openModalKunde('lg'); $ctrl.selected.item = item"
+                                    <select class="form-control" ng-model="$ctrl.selectedIndexKunde"
+                                            ng-change="$ctrl.selected.item = item; $ctrl.openModalKunde('lg')"
                                             ng-options="item as item.name for item in $ctrl.getAllKundes()">
-                                        <option value="" ng-hide="selectedIndex">Wählen Sie einen Kunden oder
-                                            legen Sie
-                                            einen neuen Kunden an
+                                        <option value="$ctrl.selected.item.bezeichnung" ng-hide="$ctrl.selectedIndexKunde">{{$ctrl.selected.item.bezeichnung}}
                                         </option>
                                     </select>
                                     <div class="modal-parent">
@@ -110,6 +124,8 @@
                             </div>
 
                         </div>
+
+
                     </div>
                     <div ui-view></div>
                     <div ui-view="angebot"></div>
@@ -119,18 +135,121 @@
                             <label class="col-md-2 control-lable"
                                    for="ansprechpartner">Ansprechpartner</label>
                             <div class="col-md-7">
-                                <select class="form-control" ng-model="selectedIndex"
-                                        ng-change="$ctrl.openModalKunde('lg'); $ctrl.selected.item = item"
+                                <select class="form-control" ng-model="$ctrl.selectedIndexKunde"
+                                        ng-change="$ctrl.selected.item = item; $ctrl.openModalKunde('lg') "
                                         ng-options="item as item.ansprechpartner for item in $ctrl.getAllKundes()">
-                                    <option value="" ng-hide="selectedIndex">Wählen Sie einen
-                                        Ansprechpartner oder legen
-                                        Sie einen neuen Ansprechpartner an
+                                    <option value="$ctrl.selected.item.ansprechpartner" ng-hide="$ctrl.selectedIndexKunde">{{$ctrl.selected.item.ansprechpartner}}
                                     </option>
                                 </select>
                             </div>
                         </div>
                     </div>
+
+
+                    <div class="modal-demo2">
+
+                        <script type="text/ng-template" id="myModalContainerContent.html">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="modal-title">Wählen Sie einen Container aus</h3>
+                            </div>
+                            <div class="modal-body" id="modal-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>MODULAUSWAHL</th>
+                                            <th>NUTZUNGSART</th>
+                                            <th>AUSFUEHRUNG</th>
+                                            <th>GESAMTPREIS</th>
+                                            <th>ANZAHL</th>
+                                            <th>BILD</th>
+                                            <th>BESCHREIBUNG</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="item in $ctrl.items"
+                                            ng-click="$event.preventDefault(); $ctrl.selected.item = item">
+                                            <td>{{item.id}}</td>
+                                            <td>{{item.modul.modul}}</td>
+                                            <td>{{item.nutzungsart.typ}}</td>
+                                            <td>{{item.ausfuehrung.typ}}</td>
+                                            <td>{{item.gesamtpreis}}</td>
+                                            <td>{{item.anzahl}}</td>
+                                            <td><img src="images/{{item.nutzungsart.imageID}}"
+                                                     alt="" class="img"/></td>
+                                            <td>{{item.modul.beschreibung}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK
+                                    </button>
+                                    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">
+                                        Cancel
+                                    </button>
+                                </div>
+
+                        </script>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-lable"
+                                       for="container">Container</label>
+                                <div class="col-md-7">
+                                    <select class="form-control" ng-model="$ctrl.selectedIndexContainer"
+                                            ng-change="$ctrl.selected.item = item; $ctrl.openModalContainer('lg'); "
+                                            ng-options="item as item.bezeichnung for item in $ctrl.getAllContainers()"
+
+                                    >
+                                        <#--<select class="form-control" ng-model="selectedIndexContainer"
+                                                ng-change="$ctrl.selected.item = item; $ctrl.openModalContainer('lg'); "
+                                                ng-options="item as item.bezeichnung for item in $ctrl.getAllContainers()"
+
+                                        >-->
+                                        <option value="$ctrl.selected.item.bezeichnung" ng-hide="$ctrl.selectedIndexContainer">{{$ctrl.selected.item.bezeichnung}}
+                                        </option>
+                                    </select>
+                                    <div class="modal-parent">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
             </div>
+
+
+        <#--   ng-model="selectedIndex"
+    ng-change="$ctrl.openModalKunde('lg'); $ctrl.selected.item = item"-->
+
+            <div>
+                <label class="child-label" for="existing-phases">Existierende Angebote:&nbsp;&nbsp;</label>
+                <input type="text" ng-model="angebot" list="names">
+                <datalist id="names" class="form-control" ng-model="name" ng-hide="true">
+                    <option ng-repeat="option in contacts | filter:search "
+                            value="{{option.name}}" ng-hide="true"></option>
+                </datalist>
+            </div>
+
+
+        <#-- <div>
+             <form ng-submit="click(search);">
+                 <label class="child-label" for="existing-phases">Existing:&nbsp;&nbsp;</label>
+                 <input type="text" ng-model="search" list="names">
+                 <datalist id="names" class="form-control" ng-model="name">
+                 &lt;#&ndash; <option value=''>-- select an option --</option>&ndash;&gt;
+                     <option ng-repeat="option in contacts | filter:search | limitTo:3"
+                             value="{{option.name}}"></option>
+
+                 </datalist>
+             &lt;#&ndash;  <button type="submit">Submit</button>&ndash;&gt;
+             </form>
+         </div>-->
 
             <div class="row">
 
@@ -162,7 +281,10 @@
 
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead">Liste von existierenden Angeboten </span></div>
+        <div class="panel-heading"><span class="lead">Liste von existierenden Angeboten :&nbsp;&nbsp;
+
+
+        </span></div>
         <div class="panel-body">
 
             <div class="table-responsive">
@@ -175,6 +297,9 @@
                         <th>KOMMENTAR</th>
                         <th>RABATT</th>
                         <th>ANSPRECHPARTNER</th>
+                        <th>KUNDE</th>
+                        <th>CONTAINER</th>
+                        <th width="800">BILD</th>
                         <th width="100"></th>
                         <th width="100"></th>
                     </tr>
@@ -186,7 +311,11 @@
                         <td>{{u.beschreibung}}</td>
                         <td>{{u.kommentar}}</td>
                         <td>{{u.rabatt}}</td>
-                        <td>{{u.ansprechpartner}}</td>
+                        <td>{{u.kunde.ansprechpartner}}</td>
+                        <td>{{u.kunde.name}}</td>
+                        <td>{{u.container.bezeichnung}}</td>
+                        <td><img src="images/{{u.container.nutzungsart.imageID}}"
+                                 alt="Wählen Sie eine Nutzungsart aus..." class="img"/></td>
                         <td>
                             <button type="button" ng-click="$ctrl.editAngebot(u.id)"
                                     class="btn btn-success custom-width">Edit

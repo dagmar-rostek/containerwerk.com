@@ -30,6 +30,7 @@
     <script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.7/angular-material.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-sanitize.js"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-cookies.js"></script>
 
 
     <title ng-bind="$state.current.name + ' - ui-router'">ui-router</title>
@@ -75,6 +76,7 @@
 <script src="js/app/ModalDemoCtrl.js"></script>
 <script src="js/app/KundeController.js"></script>
 <script src="js/app/KundeService.js"></script>
+<script src="js/app/ContainerModelleService.js"></script>
 <script src="js/app/NutzungsartController.js"></script>
 <script src="js/app/NutzungsartService.js"></script>
 <script src="js/app/ProjektinformationenController.js"></script>
@@ -83,6 +85,7 @@
 <script src="js/app/ModulService.js"></script>
 <script src="js/app/ModulController.js"></script>
 <script src="js/app/AusfuehrungService.js"></script>
+<script src="js/app/FeatureService.js"></script>
 <script src="js/app/AngebotService.js"></script>
 <script src="js/app/AngebotController.js"></script>
 <script src="js/app/ConfiguratorService.js"></script>

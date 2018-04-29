@@ -19,8 +19,9 @@ public class ContainerServiceImpl implements ContainerService {
         return containerRepository.findOne(id);
     }
     @Override
-    public void saveContainer(Container container) {
+    public Container saveContainer(Container container) {
         containerRepository.save(container);
+        return container;
     }
 
     @Override

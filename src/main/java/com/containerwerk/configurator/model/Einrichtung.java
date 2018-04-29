@@ -13,9 +13,7 @@ import java.util.Objects;
 public class Einrichtung implements Serializable  {
 
     @Id
-    @GenericGenerator(name="kaugen" , strategy="increment")
-    @GeneratedValue(generator="kaugen")
-   // @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -28,8 +26,17 @@ public class Einrichtung implements Serializable  {
     @Column(name="imageID")
     private String imageID;
 
-    @Column(name="ausfuehrung")
-    private Ausfuehrung ausfuehrung;
+    @Column(name="container")
+    private Container container;
+
+    @OneToOne(targetEntity = Container.class, mappedBy = "container")
+    public Container getContainer() {
+        return container;
+    }
+
+    public void setContainer(Container container) {
+        this.container = container;
+    }
 
     public Long getId() {
         return id;
@@ -63,15 +70,6 @@ public class Einrichtung implements Serializable  {
         this.imageID = imageID;
     }
 
-    @ManyToOne
-    public Ausfuehrung getAusfuehrung() {
-        return ausfuehrung;
-    }
-
-    public void setAusfuehrung(Ausfuehrung ausfuehrung) {
-        this.ausfuehrung = ausfuehrung;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,13 +79,13 @@ public class Einrichtung implements Serializable  {
                 Objects.equals(getTyp(), that.getTyp()) &&
                 Objects.equals(getBeschreibung(), that.getBeschreibung()) &&
                 Objects.equals(getImageID(), that.getImageID()) &&
-                Objects.equals(getAusfuehrung(), that.getAusfuehrung());
+                Objects.equals(getContainer(), that.getContainer());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getId(), getTyp(), getBeschreibung(), getImageID(), getAusfuehrung());
+        return Objects.hash(getId(), getTyp(), getBeschreibung(), getImageID(), getContainer());
     }
 
     @Override
@@ -97,7 +95,7 @@ public class Einrichtung implements Serializable  {
                 ", typ='" + typ + '\'' +
                 ", beschreibung='" + beschreibung + '\'' +
                 ", imageID='" + imageID + '\'' +
-                ", ausfuehrung=" + ausfuehrung +
+                ", container=" + container +
                 '}';
     }
 }

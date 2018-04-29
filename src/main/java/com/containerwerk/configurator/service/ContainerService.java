@@ -8,7 +8,7 @@ public interface ContainerService {
 
     Container findById(Long id);
 
-    void saveContainer(Container container);
+    Container saveContainer(Container container);
 
     void updateContainer(Container container);
 

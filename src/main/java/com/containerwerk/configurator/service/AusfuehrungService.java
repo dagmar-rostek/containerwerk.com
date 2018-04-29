@@ -1,6 +1,7 @@
 package com.containerwerk.configurator.service;
 
 import com.containerwerk.configurator.model.Ausfuehrung;
+import com.containerwerk.configurator.model.Nutzungsart;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface AusfuehrungService {
     List<Ausfuehrung> findAllAusfuehrungen();
 
     boolean isAusfuehrungExist(Ausfuehrung ausfuehrung);
+
+    List<Ausfuehrung> findAllAusfuehrungenFuerNutzungsart(Nutzungsart nutzungsart);
 }

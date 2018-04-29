@@ -50,7 +50,8 @@ public class RestApiController {
 	TodoService todoService;
 	@Autowired
     LoginService loginService;
-
+	@Autowired
+	ContainerModelleService containerModelleService;
 	// -------------------Retrieve All Users---------------------------------------------
 
 	@RequestMapping(value = "/user/", method = RequestMethod.GET)
@@ -193,16 +194,14 @@ public class RestApiController {
 			return new ResponseEntity(new CustomErrorType("Unable to create. A Container with name " +
 					container.getId() + " already exist."),HttpStatus.CONFLICT);
 		}*/
-		if(container.getAnzahl()!=null){
-            container.setGesamtpreis(container.getPreis()*container.getAnzahl());
-        }else{
-            container.setGesamtpreis(container.getPreis());
-        }
+
 		containerService.saveContainer(container);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/api/containers/{id}").buildAndExpand(container.getId()).toUri());
-		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+
+		return new ResponseEntity<Container>(container, HttpStatus.OK);
+	  //	return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}
 
 
@@ -254,6 +253,7 @@ public class RestApiController {
 		currentAngebot.setGesamtpreis(angebot.getGesamtpreis());
 		currentAngebot.setRabatt(angebot.getRabatt());
 		currentAngebot.setAnsprechpartner(angebot.getAnsprechpartner());
+		currentAngebot.setContainer(angebot.getContainer());
 		angebotService.updateAngebot(currentAngebot);
 		return new ResponseEntity<Angebot>(currentAngebot, HttpStatus.OK);
 	}
@@ -274,12 +274,12 @@ public class RestApiController {
 		}
 
 		currentContainer.setAngebot(container.getAngebot());
-		currentContainer.setBeschreibung(container.getBeschreibung());
+/*		currentContainer.setBeschreibung(container.getBeschreibung());
 		currentContainer.setImageID(container.getImageID());
 		currentContainer.setModul(container.getModul());
-		currentContainer.setPreis(container.getPreis());
+		currentContainer.setPreis(container.getPreis());*/
 		currentContainer.setGesamtpreis(container.getGesamtpreis());
-		currentContainer.setPreisrelevant(container.isPreisrelevant());
+		/*currentContainer.setPreisrelevant(container.isPreisrelevant());*/
 
 		containerService.updateContainer(currentContainer);
 		return new ResponseEntity<Container>(currentContainer, HttpStatus.OK);
@@ -466,11 +466,22 @@ public class RestApiController {
 
 	////
 
-	// -------------------Retrieve All Ausfuehrungen---------------------------------------------
+	// -------------------Retrieve All Ausfuehrungen----------
+	// Hier um die Nutzungsart erweitern findAllAusfuehrung pro Nutzungsart-----------------------------------
 
 	@RequestMapping(value = "/ausfuehrung/", method = RequestMethod.GET)
 	public ResponseEntity<List<Ausfuehrung>> listAllAusfuehrungen() {
 		List<Ausfuehrung> ausfuehrungen = ausfuehrungService.findAllAusfuehrungen();
+		if (ausfuehrungen.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			// You many decide to return HttpStatus.NOT_FOUND
+		}
+		return new ResponseEntity<List<Ausfuehrung>>(ausfuehrungen, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/ausfuehrungfnutzungsart/", method = RequestMethod.GET)
+	public ResponseEntity<List<Ausfuehrung>> listAllAusfuehrungenFuerNutzungsart(@PathVariable("nutzungsart") Nutzungsart nutzungsart) {
+		List<Ausfuehrung> ausfuehrungen = ausfuehrungService.findAllAusfuehrungenFuerNutzungsart(nutzungsart);
 		if (ausfuehrungen.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 			// You many decide to return HttpStatus.NOT_FOUND
@@ -719,7 +730,6 @@ public class RestApiController {
 		currentEinrichtung.setTyp(einrichtung.getTyp());
 		currentEinrichtung.setBeschreibung(einrichtung.getBeschreibung());
 		currentEinrichtung.setImageID(einrichtung.getImageID());
-		currentEinrichtung.setAusfuehrung(einrichtung.getAusfuehrung());
 
 		einrichtungService.updateEinrichtung(currentEinrichtung);
 		return new ResponseEntity<Einrichtung>(currentEinrichtung, HttpStatus.OK);
@@ -814,7 +824,6 @@ public class RestApiController {
 		currentFeature.setTyp(feature.getTyp());
 		currentFeature.setBeschreibung(feature.getBeschreibung());
 		currentFeature.setImageID(feature.getImageID());
-		currentFeature.setAusfuehrung(feature.getAusfuehrung());
 		currentFeature.setPreis(feature.getPreis());
 
 		featureService.updateFeature(currentFeature);
@@ -943,6 +952,18 @@ public class RestApiController {
 		return new ResponseEntity<Kunde>(HttpStatus.NO_CONTENT);
 	}
 
+	//--------------------Retrieve All ContainerModelle--------------------------------
+
+	@RequestMapping(value = "/containermodelle/", method = RequestMethod.GET)
+	public ResponseEntity<List<ContainerModelle>> listAllContainerModelle() {
+		List<ContainerModelle> containerModelle = containerModelleService.findAllContainerModelle();
+		if (containerModelle.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			// You many decide to return HttpStatus.NOT_FOUND
+		}
+		return new ResponseEntity<List<ContainerModelle>>(containerModelle, HttpStatus.OK);
+	}
+
 
 	// -------------------Retrieve All Moduls---------------------------------------------
 
@@ -999,6 +1020,7 @@ public class RestApiController {
 		modulService.saveModul(modul);
 
 		HttpHeaders headers = new HttpHeaders();
+
 		headers.setLocation(ucBuilder.path("/api/modul/{id}").buildAndExpand(modul.getId()).toUri());
 		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}

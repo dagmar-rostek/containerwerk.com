@@ -4,6 +4,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -26,8 +28,9 @@ public class Nutzungsart implements Serializable{
     @Column(name="preis")
     private Double preis;
 
-    @Column(name="ausfuehrung")
-    private Ausfuehrung ausfuehrung;
+    @ElementCollection
+    @Column(name="modulVarianten")
+    private List<ModulVarianten> modulVarianten;
 
 
     public Long getId() {
@@ -70,13 +73,12 @@ public class Nutzungsart implements Serializable{
         this.preis = preis;
     }
 
-    @OneToOne(targetEntity=Ausfuehrung.class, mappedBy = "ausfuehrung")
-    public Ausfuehrung getAusfuehrung() {
-        return ausfuehrung;
+    public List<ModulVarianten> getModulVarianten() {
+        return modulVarianten;
     }
 
-    public void setAusfuehrung(Ausfuehrung ausfuehrung) {
-        this.ausfuehrung = ausfuehrung;
+    public void setModulVarianten(ArrayList<ModulVarianten> modulVarianten) {
+        this.modulVarianten = modulVarianten;
     }
 
     @Override
@@ -89,13 +91,13 @@ public class Nutzungsart implements Serializable{
                 Objects.equals(getBeschreibung(), that.getBeschreibung()) &&
                 Objects.equals(getImageID(), that.getImageID()) &&
                 Objects.equals(getPreis(), that.getPreis()) &&
-                Objects.equals(getAusfuehrung(), that.getAusfuehrung());
+                Objects.equals(getModulVarianten(), that.getModulVarianten());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getId(), getTyp(), getBeschreibung(), getImageID(), getPreis(), getAusfuehrung());
+        return Objects.hash(getId(), getTyp(), getBeschreibung(), getImageID(), getPreis(), getModulVarianten());
     }
 
     @Override
@@ -106,7 +108,7 @@ public class Nutzungsart implements Serializable{
                 ", beschreibung='" + beschreibung + '\'' +
                 ", imageID='" + imageID + '\'' +
                 ", preis=" + preis +
-                ", ausfuehrung=" + ausfuehrung +
+                ", modulVarianten=" + modulVarianten +
                 '}';
     }
 }

@@ -17,7 +17,7 @@ angular.module('crudApp').factory('AusfuehrungService',
             function loadAllAusfuehrungen() {
                 console.log('Fetching all ausfuehrungen');
                 var deferred = $q.defer();
-                $http.get(urls.ANGEBOT_SERVICE_API)
+                $http.get(urls.AUSFUEHRUNG_SERVICE_API)
                     .then(
                         function (response) {
                             console.log('Fetched successfully all ausfuehrungen');
@@ -40,7 +40,7 @@ angular.module('crudApp').factory('AusfuehrungService',
             function getAusfuehrung(id) {
                 console.log('Get Ausfuehrung with id ' + id);
                 var deffered = $q.defer();
-                $http.get(urls.ANGEBOT_SERVICE_API + id)
+                $http.get(urls.AUSFUEHRUNG_SERVICE_API + id)
                     .then(
                         function (response) {
                             console.log('Fetched successfully Ausfuehrung with id: ' + id);
@@ -57,7 +57,7 @@ angular.module('crudApp').factory('AusfuehrungService',
             function createAusfuehrung(ausfuehrung) {
                 console.log('Creating Ausfuehrung');
                 var deferred = $q.defer();
-                $http.post(urls.ANGEBOT_SERVICE_API, ausfuehrung)
+                $http.post(urls.AUSFUEHRUNG_SERVICE_API, ausfuehrung)
                     .then(
                         function (response) {
                             loadAllAusfuehrunge();
@@ -74,7 +74,7 @@ angular.module('crudApp').factory('AusfuehrungService',
             function updateAusfuehrung(ausfuehrung, id) {
                 console.log('Updating Ausfuehrung with id '+id);
                 var deferred = $q.defer();
-                $http.put(urls.ANGEBOT_SERVICE_API + id, ausfuehrung)
+                $http.put(urls.AUSFUEHRUNG_SERVICE_API + id, ausfuehrung)
                     .then(
                         function (response) {
                             loadAllAusfuehrunge();
@@ -91,7 +91,7 @@ angular.module('crudApp').factory('AusfuehrungService',
             function removeAusfuehrung(id) {
                 console.log('Removing Ausfuehrung with id '+id);
                 var deferred = $q.defer();
-                $http.delete(urls.ANGEBOT_SERVICE_API + id)
+                $http.delete(urls.AUSFUEHRUNG_SERVICE_API + id)
                     .then(
                         function (response) {
                             loadAllAusfuehrunge();

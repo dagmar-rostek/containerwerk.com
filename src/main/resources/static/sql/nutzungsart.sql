@@ -1,5 +1,161 @@
-insert into APP_NUTZ(typ, beschreibung, imageID, preis) VALUES ('STUDENT', 'Der Containertyp Student ist zwar einfach aber ... ', '40ft-2-frankfurt_2_wood-1-300x168.jpg', '2000');
-insert into APP_NUTZ(typ, beschreibung, imageID, preis) VALUES ('HOTEL', 'Der Containertyp Hotel ist ein Traum für jeden ... ', 'dsf0111_55-1-300x169.png', '2000');
-insert into APP_NUTZ(typ, beschreibung, imageID, preis) VALUES ('BOARDINGHOUSE', 'Der Containertyp Boardinghaus bietet extra  ... ', '40ft-2-office6-2_kamera_25_a-300x168.jpg', '2000');
-insert into APP_NUTZ(typ, beschreibung, imageID, preis) VALUES ('NUR BAD', 'Der Containertyp nur Bad ist für ... ', '40ft-2-frankfurt_2_wood-1-300x168.jpg', '2000');
-insert into APP_NUTZ(typ, beschreibung, imageID, preis) VALUES ('NUR WAND', 'Der Containertyp nur Wand hat ... ', 'dsf0449_55-200x300.jpg', '2000');
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('STUDENT', 'CW40_AuswahlStudent.png', '7000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext');
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('BOARDINGHOUSE', 'CW40_AuswahlBOARDINGHOUSE.png', '27000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('STUDENT', 'CW40D_AuswahlStudent.png', '7000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('HOTEL', 'CW40D_AuswahlHOTEL.png', '17000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('BOARDINGHOUSE', 'CW40D_AuswahlBOARDINGHOUSE.png', '27000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('STUDENT', 'CW40L_AuswahlStudent.png', '7000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('HOTEL', 'CW40L_AuswahlHOTEL.png', '17000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+
+
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('BOARDINGHOUSE', 'CW40L_AuswahlBOARDINGHOUSE.png', '27000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+
+
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('STUDENT', 'CW40DL_AuswahlStudent.png', '7000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('HOTEL', 'CW40DL_AuswahlHOTEL.png', '17000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+
+
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('STUDENT', 'CW40DV_AuswahlStudent.png', '7000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+
+
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('HOTEL', 'CW40DV_AuswahlHOTEL.png', '17000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+
+
+
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('BOARDINGHOUSE', 'CW40DV_AuswahlBOARDINGHOUSE.png', '27000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('STUDENT', 'CW40DVL_AuswahlStudent.png', '7000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+
+
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('HOTEL', 'CW40DVL_AuswahlHOTEL.png', '17000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+
+
+insert into APP_NUTZ(typ, imageID, preis, beschreibung) VALUES ('BOARDINGHOUSE', 'CW40DVL_AuswahlBOARDINGHOUSE.png', '27000', '
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext Dummytext dummytext dummytext
+
+
+');
+

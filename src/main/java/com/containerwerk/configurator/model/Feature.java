@@ -28,8 +28,17 @@ public class Feature implements Serializable {
     @Column(name="preis")
     private Double preis;
 
-    @Column(name="ausfuehrung")
-    private Ausfuehrung ausfuehrung;
+    @Column(name="container")
+    private Container container;
+
+    @OneToOne(targetEntity = Container.class, mappedBy = "container")
+    public Container getContainer() {
+        return container;
+    }
+
+    public void setContainer(Container container) {
+        this.container = container;
+    }
 
     public Long getId() {
         return id;
@@ -71,15 +80,6 @@ public class Feature implements Serializable {
         this.preis = preis;
     }
 
-    @ManyToOne
-    public Ausfuehrung getAusfuehrung() {
-        return ausfuehrung;
-    }
-
-    public void setAusfuehrung(Ausfuehrung ausfuehrung) {
-        this.ausfuehrung = ausfuehrung;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,13 +90,13 @@ public class Feature implements Serializable {
                 Objects.equals(getBeschreibung(), feature.getBeschreibung()) &&
                 Objects.equals(getImageID(), feature.getImageID()) &&
                 Objects.equals(getPreis(), feature.getPreis()) &&
-                Objects.equals(getAusfuehrung(), feature.getAusfuehrung());
+                Objects.equals(getContainer(), feature.getContainer());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getId(), getTyp(), getBeschreibung(), getImageID(), getPreis(), getAusfuehrung());
+        return Objects.hash(getId(), getTyp(), getBeschreibung(), getImageID(), getPreis(), getContainer());
     }
 
     @Override
@@ -107,7 +107,7 @@ public class Feature implements Serializable {
                 ", beschreibung='" + beschreibung + '\'' +
                 ", imageID='" + imageID + '\'' +
                 ", preis=" + preis +
-                ", ausfuehrung=" + ausfuehrung +
+                ", container=" + container +
                 '}';
     }
 }

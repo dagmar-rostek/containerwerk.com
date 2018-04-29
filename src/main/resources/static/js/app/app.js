@@ -8,6 +8,7 @@ var app = angular.module('crudApp', [
     'ngStorage',
     'ui.router.stateHelper',
     'ngRoute',
+    'ngCookies',
     'ui.bootstrap'
 
 ]);
@@ -35,10 +36,10 @@ app.constant('urls', {
     CONTAINER_SERVICE_API: 'http://localhost:8080/api/container/',
     MODUL_SERVICE_API: 'http://localhost:8080/api/modul/',
     NUTZUNGSART_SERVICE_API: 'http://localhost:8080/api/nutzungsart/',
-    AUSFUEHRUNGEN_SERVICE_API: 'http://localhost:8080/api/ausfuehrung/',
+    CONTAINERMODELLE_SERVICE_API: 'http://localhost:8080/api/containermodelle/',
+    AUSFUEHRUNG_SERVICE_API: 'http://localhost:8080/api/ausfuehrung/',
     PROJEKTINFORMATIONEN_SERVICE_API: 'http://localhost:8080/api/projektinformationen/'
 });
-
 
 app.config(
     ['$stateProvider', '$urlRouterProvider',
@@ -49,7 +50,7 @@ app.config(
 
             $urlRouterProvider
 
-                // If the url is ever invalid, e.g. '/asdf', then redirect to '/' aka the home state
+            // If the url is ever invalid, e.g. '/asdf', then redirect to '/' aka the home state
                 .otherwise('/');
 
             //////////////////////////
@@ -77,7 +78,6 @@ app.config(
                 .state({
                     name: 'angebot',
                     url: '/angebot',
-
                     templateUrl: 'partials/angebot',
                     controller: 'AngebotController',
                     controllerAs: 'ctrl',
@@ -89,10 +89,16 @@ app.config(
                             AngebotService.loadAllAngebote().then(deferred.resolve, deferred.resolve);
                             return deferred.promise;
                         },
-                        kundes: function ($q, KundeService){
+                        kundes: function ($q, KundeService) {
                             console.log('Load all Kundes');
                             var deferred = $q.defer();
                             KundeService.loadAllKundes().then(deferred.resolve, deferred.resolve);
+                            return deferred.promise;
+                        },
+                        containers: function($q, ContainerService){
+                            console.log('Load all containers');
+                            var deferred = $q.defer();
+                            ContainerService.loadAllContainers().then(deferred.resolve, deferred.resolve);
                             return deferred.promise;
                         }
                     }
@@ -107,7 +113,7 @@ app.config(
                     controllerAs: 'ctrl'
 
                 })
-                .state({
+                /*.state({
                     name: 'nutzungsart',
                     url: '/nutzungsart',
                     templateUrl: 'partials/nutzungsart',
@@ -119,22 +125,6 @@ app.config(
                             console.log('Load all nutzungsarts');
                             var deferred = $q.defer();
                             NutzungsartService.loadAllNutzungsarts().then(deferred.resolve, deferred.resolve);
-                            return deferred.promise;
-                        }
-                    }
-                })
-                .state({
-                    name: 'ausfuehrung',
-                    url: '/ausfuehrung',
-                    templateUrl: 'partials/ausfuehrung',
-                    controller: 'ContainerController',
-                    controllerAs: 'ctrl',
-                    parent: 'container',
-                    resolve: {
-                        ausfuehrungen: function ($q, AusfuehrungService) {
-                            console.log('Load all ausfuehrungen');
-                            var deferred = $q.defer();
-                            AusfuehrungService.loadAllAusfuehrungen().then(deferred.resolve, deferred.resolve);
                             return deferred.promise;
                         }
                     }
@@ -153,28 +143,48 @@ app.config(
                             return deferred.promise;
                         }
                     }
-                })
+                })*/
                 .state({
                     name: 'container',
                     url: '/container',
-                    params:{
-                        'id':'id'
+                    params: {
+                        'id': 'id'
                     },
                     templateUrl: 'partials/container',
                     controller: 'ContainerController',
                     controllerAs: 'ctrl',
                     resolve: {
+                        containermodelle: function ($q, ContainerModelleService) {
+                            console.log('load all containermodelle');
+                            var deferred = $q.defer();
+                            ContainerModelleService.loadAllContainerModelle().then(deferred.resolve, deferred.resolve);
+                            return deferred.promise;
+                        },
+                        containers: function ($q, ContainerService) {
+                            console.log('load all containers');
+                            var deferred = $q.defer();
+                            ContainerService.loadAllContainers().then(deferred.resolve, deferred.resolve);
+                            return deferred.promise;
+                        },
                         moduls: function ($q, ModulService) {
                             console.log('Load all moduls');
                             var deferred = $q.defer();
                             ModulService.loadAllModuls().then(deferred.resolve, deferred.resolve);
                             return deferred.promise;
                         },
-                        containers: function($q, ContainerService){
-                            console.log('load all containers');
+                        nutzungsarts: function ($q, NutzungsartService) {
+                            console.log('Load all nutzungsarts');
                             var deferred = $q.defer();
-                            ContainerService.loadAllContainers().then(deferred.resolve, deferred.resolve);
+                            NutzungsartService.loadAllNutzungsarts().then(deferred.resolve, deferred.resolve);
                             return deferred.promise;
+
+                        },
+                        ausfuehrungen: function ($q, AusfuehrungService) {
+                            console.log('Load all ausfuehrungen');
+                            var deferred = $q.defer();
+                            AusfuehrungService.loadAllAusfuehrungen().then(deferred.resolve, deferred.resolve);
+                            return deferred.promise;
+
                         }
 
 

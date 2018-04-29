@@ -1,0 +1,1 @@
+insert into Ausfuehrung_nutzungsartVarianten(Ausfuehrung_id, nutzungsartVarianten) values (1, 4);

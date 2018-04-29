@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,9 +15,7 @@ import java.util.Objects;
 public class Ausfuehrung implements Serializable {
 
     @Id
-    @GenericGenerator(name="kaugen" , strategy="increment")
-    @GeneratedValue(generator="kaugen")
-    //@GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -32,13 +31,22 @@ public class Ausfuehrung implements Serializable {
     @Column(name="preis")
     private Integer preis;
 
-    @ElementCollection(targetClass=Feature.class)
+    @ElementCollection
+    @Column(name="modulVarianten")
+    private List<ModulVarianten> modulVarianten;
+
+    @ElementCollection
+    @Column(name="nutzungsartVarianten")
+    private List<NutzungsartVarianten> nutzungsartVarianten;
+
+    @ElementCollection
     @Column(name="featureliste")
     private List<Feature> featureList;
 
-    @ElementCollection(targetClass=Einrichtung.class)
+    @ElementCollection
     @Column(name="einrichtungliste")
     private List<Einrichtung> einrichtungList;
+
 
     public Long getId() {
         return id;
@@ -80,7 +88,6 @@ public class Ausfuehrung implements Serializable {
         this.preis = preis;
     }
 
-    @OneToOne(targetEntity=Feature.class, mappedBy = "feature")
     public List<Feature> getFeatureList() {
         return featureList;
     }
@@ -89,13 +96,28 @@ public class Ausfuehrung implements Serializable {
         this.featureList = featureList;
     }
 
-    @OneToMany(targetEntity=Einrichtung.class, mappedBy = "einrichtung")
     public List<Einrichtung> getEinrichtungList() {
         return einrichtungList;
     }
 
     public void setEinrichtungList(List<Einrichtung> einrichtungList) {
         this.einrichtungList = einrichtungList;
+    }
+
+    public List<ModulVarianten> getModulVarianten() {
+        return modulVarianten;
+    }
+
+    public void setModulVarianten(ArrayList<ModulVarianten> modulVarianten) {
+        this.modulVarianten = modulVarianten;
+    }
+
+    public List<NutzungsartVarianten> getNutzungsartVarianten() {
+        return nutzungsartVarianten;
+    }
+
+    public void setNutzungsartVarianten(ArrayList<NutzungsartVarianten> nutzungsartVarianten) {
+        this.nutzungsartVarianten = nutzungsartVarianten;
     }
 
     @Override
@@ -108,6 +130,8 @@ public class Ausfuehrung implements Serializable {
                 Objects.equals(getBeschreibung(), that.getBeschreibung()) &&
                 Objects.equals(getImageID(), that.getImageID()) &&
                 Objects.equals(getPreis(), that.getPreis()) &&
+                Objects.equals(getModulVarianten(), that.getModulVarianten()) &&
+                Objects.equals(getNutzungsartVarianten(), that.getNutzungsartVarianten()) &&
                 Objects.equals(getFeatureList(), that.getFeatureList()) &&
                 Objects.equals(getEinrichtungList(), that.getEinrichtungList());
     }
@@ -115,9 +139,7 @@ public class Ausfuehrung implements Serializable {
     @Override
     public int hashCode() {
 
-        return Objects.hash(getId(), getTyp(), getBeschreibung(), getImageID(), getPreis(),
-                getFeatureList(),
-                getEinrichtungList());
+        return Objects.hash(getId(), getTyp(), getBeschreibung(), getImageID(), getPreis(), getModulVarianten(), getNutzungsartVarianten(), getFeatureList(), getEinrichtungList());
     }
 
     @Override
@@ -128,6 +150,8 @@ public class Ausfuehrung implements Serializable {
                 ", beschreibung='" + beschreibung + '\'' +
                 ", imageID='" + imageID + '\'' +
                 ", preis=" + preis +
+                ", modulVarianten=" + modulVarianten +
+                ", nutzungsartVarianten=" + nutzungsartVarianten +
                 ", featureList=" + featureList +
                 ", einrichtungList=" + einrichtungList +
                 '}';

@@ -12,9 +12,12 @@ angular.module('crudApp').factory('ContainerService',
                 updateContainer: updateContainer,
                 removeContainer: removeContainer,
                 getIdContainer: getIdContainer
+                //getCreatedContainer: getCreatedContainer
             };
-
+            var deferred = $q.defer();
             return factory;
+
+
 
             function loadAllContainers() {
                 console.log('Fetching all containers');
@@ -58,6 +61,9 @@ angular.module('crudApp').factory('ContainerService',
                 return deferred.promise;
             }
 
+           /* function getCreatedContainer(){
+                return deferred;
+            }*/
             function getContainer(id) {
                 console.log('Get Container with id ' + id);
                 var deferred = $q.defer();

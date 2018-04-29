@@ -24,6 +24,9 @@ public class Angebot implements Serializable{
     @ElementCollection(targetClass=Container.class)
     private List<Container> containerListe = new ArrayList<Container>();
 
+    @Column(name="container")
+    private Container container;
+
     @Column(name="gesamtpreis")
     private Double gesamtpreis;
 
@@ -134,6 +137,14 @@ public class Angebot implements Serializable{
         this.ansprechpartner = ansprechpartner;
     }
 
+    public Container getContainer() {
+        return container;
+    }
+
+    public void setContainer(Container container) {
+        this.container = container;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -144,6 +155,7 @@ public class Angebot implements Serializable{
                 Objects.equals(getName(), angebot.getName()) &&
                 Objects.equals(getKunde(), angebot.getKunde()) &&
                 Objects.equals(getContainerListe(), angebot.getContainerListe()) &&
+                Objects.equals(getContainer(), angebot.getContainer()) &&
                 Objects.equals(getGesamtpreis(), angebot.getGesamtpreis()) &&
                 Objects.equals(getRabatt(), angebot.getRabatt()) &&
                 Objects.equals(getBeschreibung(), angebot.getBeschreibung()) &&
@@ -155,7 +167,7 @@ public class Angebot implements Serializable{
     @Override
     public int hashCode() {
 
-        return Objects.hash(getId(), getName(), getKunde(), getContainerListe(), getGesamtpreis(), getRabatt(), getBeschreibung(), getKommentar(), isInterneAnsicht(), getAnsprechpartner(), getProjektinformationen());
+        return Objects.hash(getId(), getName(), getKunde(), getContainerListe(), getContainer(), getGesamtpreis(), getRabatt(), getBeschreibung(), getKommentar(), isInterneAnsicht(), getAnsprechpartner(), getProjektinformationen());
     }
 
     @Override
@@ -165,6 +177,7 @@ public class Angebot implements Serializable{
                 ", name='" + name + '\'' +
                 ", kunde=" + kunde +
                 ", containerListe=" + containerListe +
+                ", container=" + container +
                 ", gesamtpreis=" + gesamtpreis +
                 ", rabatt='" + rabatt + '\'' +
                 ", beschreibung='" + beschreibung + '\'' +

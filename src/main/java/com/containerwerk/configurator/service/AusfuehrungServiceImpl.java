@@ -1,5 +1,6 @@
 package com.containerwerk.configurator.service;
 
+import com.containerwerk.configurator.model.Nutzungsart;
 import com.containerwerk.configurator.repositories.AusfuehrungRepository;
 import com.containerwerk.configurator.model.Ausfuehrung;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,12 @@ public class AusfuehrungServiceImpl implements AusfuehrungService {
     @Override
     public boolean isAusfuehrungExist(Ausfuehrung ausfuehrung) {
         return findById(ausfuehrung.getId()) != null;
+    }
+
+    @Override
+    public List<Ausfuehrung> findAllAusfuehrungenFuerNutzungsart(Nutzungsart nutzungsart) {
+        List<Ausfuehrung> allAusfuehrungen = findAllAusfuehrungen();
+
+        return null;
     }
 }

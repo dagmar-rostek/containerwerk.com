@@ -10,10 +10,12 @@ import java.util.Objects;
 @Table(name="APP_MODU")
 public class Modul implements Serializable {
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
     @Column(name="modul")
-    private String modul;
+    @Enumerated(EnumType.STRING)
+    private ModulVarianten modul;
 
     @Column(name="beschreibung")
     private String beschreibung;
@@ -32,12 +34,11 @@ public class Modul implements Serializable {
         this.id = id;
     }
 
-    @OneToOne(targetEntity=Container.class, mappedBy = "container")
-    public String getModul() {
+    public ModulVarianten getModul() {
         return modul;
     }
 
-    public void setModul(String modul) {
+    public void setModul(ModulVarianten modul) {
         this.modul = modul;
     }
 
@@ -75,7 +76,7 @@ public class Modul implements Serializable {
                 Objects.equals(getModul(), modul1.getModul()) &&
                 Objects.equals(getBeschreibung(), modul1.getBeschreibung()) &&
                 Objects.equals(getImageID(), modul1.getImageID()) &&
-                Objects.equals(getPreis(), modul1.getPreis()) ;
+                Objects.equals(getPreis(), modul1.getPreis());
     }
 
     @Override
@@ -92,7 +93,6 @@ public class Modul implements Serializable {
                 ", beschreibung='" + beschreibung + '\'' +
                 ", imageID='" + imageID + '\'' +
                 ", preis=" + preis +
-                ", nutzungsart="  +
                 '}';
     }
 }

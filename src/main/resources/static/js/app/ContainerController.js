@@ -2,12 +2,15 @@
 
 angular.module('crudApp')
     .controller('ContainerController',
-        ['ContainerService', 'ModulService', 'NutzungsartService', 'AusfuehrungService', '$uibModal', '$log', '$document', '$scope', '$stateParams',
-            function (ContainerService, ModulService, NutzungsartService, AusfuehrungService, $uibModal, $log, $document, $scope, $stateParams) {
+        ['ContainerService', 'ModulService', 'NutzungsartService', 'AusfuehrungService', 'ContainerModelleService', '$cookies','$uibModal', '$log', '$document', '$scope', '$stateParams',
+            function (ContainerService, ModulService, NutzungsartService, AusfuehrungService, ContainerModelleService, $cookies,  $uibModal, $log, $document, $scope, $stateParams) {
 
                 var $ctrl = this;
-                $ctrl.views = ['container', 'nutzungsart', 'ausfuehrung', 'feature', 'einrichtung', 'anbaumodule'];
-                $ctrl.status = 1;
+                $ctrl.views = ['modul', 'nutzungsart', 'ausfuehrung', 'feature', 'einrichtung', 'anbaumodule', 'upgrade', 'sonderwunsch'];
+                $ctrl.status = 0;
+                $ctrl.dotobject = 0;
+                $ctrl.containerModell = {};
+                $ctrl.containerModelle = [];
                 $ctrl.modul = {};
                 $ctrl.moduls = [];
                 $ctrl.container = {};
@@ -16,8 +19,18 @@ angular.module('crudApp')
                 $ctrl.nutzungsarts = [];
                 $ctrl.ausfuehrung = {};
                 $ctrl.ausfuehrungen = [];
-                $ctrl.hide = false;
-                $ctrl.hideNutzungsart = false;
+               // $ctrl.hide = false;
+                $ctrl.hideNutzungsart = true;
+                $ctrl.hideModul = false;
+                $ctrl.hideAusfuehrung = true;
+                $ctrl.hideFeature = true;
+                $ctrl.hideAngebotErstellen = true;
+                $ctrl.hidePreis = true;
+                $ctrl.hideGesamtpreis = true;
+                $ctrl.hidePreisrelevant = true;
+                $ctrl.hideModulText = true;
+                $ctrl.hideNutzungsartText = true;
+                $ctrl.hideAusfuehrungText = true;
                 $ctrl.anzahl = 0;
                 $ctrl.submit = submit;
                 $ctrl.getAllModuls = getAllModuls;
@@ -30,11 +43,18 @@ angular.module('crudApp')
                 $ctrl.reset = reset;
                 $ctrl.berechne = berechne;
                 $ctrl.getAllNutzungsarts = getAllNutzungsarts;
+                $ctrl.getNutzungsartFuerModul = getNutzungsartFuerModul;
+                $ctrl.createModul = createModul;
                 $ctrl.createNutzungsart = createNutzungsart;
+                $ctrl.createAusfuehrung = createAusfuehrung;
                 $ctrl.updateNutzungsart = updateNutzungsart;
                 $ctrl.getAllAusfuehrungen = getAllAusfuehrungen;
                 $ctrl.getIdContainer = getIdContainer;
                 $ctrl.getView = getView;
+                $ctrl.getViewBefore = getViewBefore;
+                $ctrl.getAllContainerModelle = getAllContainermodelle;
+                $ctrl.getNutzungsarts = getNutzungsarts;
+
 
                 $ctrl.gesamtpreis = 0;
                 $ctrl.successMessage = '';
@@ -42,17 +62,38 @@ angular.module('crudApp')
                 $ctrl.done = false;
 
 
+
+
+
                 function getView(){
-                    return $ctrl.views[$ctrl.status];
+                   return $ctrl.views[$ctrl.status];
+                }
+
+                function getViewBefore(){
+                    if($ctrl.status!==1) {
+                        $ctrl.status = $ctrl.status -1;
+                        return $ctrl.views[$ctrl.status];
+                    }
+                    return 'modul';
+                }
+
+                function getNutzungsartFuerModul(modul){
+                    return NutzungsartService.getNutzungsartFuerModul(modul);
+                }
+
+                function getNutzungsarts(){
+                    return NutzungsartService.getNutzungsarts();
                 }
 
                 function getAllNutzungsarts() {
-                    $scope.$parent.$ctrl.hide = true;
                     return NutzungsartService.getAllNutzungsarts();
                 }
 
+                function getAllContainermodelle(){
+                    return ContainerModelleService.getAllContainerModelle();
+                }
+
                 function getAllAusfuehrungen(){
-                    $scope.$parent.$ctrl.hideNutzungsart = true;
                     return AusfuehrungService.getAllAusfuehrungen();
                 }
 
@@ -80,19 +121,37 @@ angular.module('crudApp')
 
                 function submit($status) {
                     switch($status){
-                        case 'container':
+                        case 'modul':
+                            /*console.log('Submitting');
+                            console.log('status is modul');
+                            var aktModul;
+                            if($ctrl.modul.id === undefined || $ctrl.modul.id === null){
+                                console.log('Saving New Modul', $ctrl.modul);
+                                createModul($ctrl.modul);
+                            }else{
+                                updateModul($ctrl.modul, $ctrl.modul.id);
+                                console.log('Modul updated with id ', $ctrl.modul.id);
+                            }
                             console.log('Submitting');
                             console.log('status is container');
                             if ($ctrl.container.id === undefined || $ctrl.container.id === null) {
                                 console.log('Saving New Container', $ctrl.container);
-                                createContainer($ctrl.container);
+                                createContainer($ctrl.container, $ctrl.modul);
                             } else {
-                                updateContainer($ctrl.container, $ctrl.container.id);
+                                updateContainer($ctrl.container, $ctrl.container.id, $ctrl.modul);
                                 console.log('Container updated with id ', $ctrl.container.id);
-                            }
+                            }*/
+                            $ctrl.status = $ctrl.status+1;
+                            $scope.$ctrl.hideModul = true;
+                            $scope.$ctrl.hidePreis = false;
+                            $scope.$ctrl.hideGesamtpreis = false;
+                            $scope.$ctrl.hidePreisrelevant = false;
+                            $scope.$ctrl.hideModulText = false;
+                           // $scope.$ctrl.hideNutzungsartText = false;
+                            $scope.$ctrl.hideNutzungsart = false;
                             break;
                         case 'nutzungsart':
-                            console.log('Submitting nutzungsart');
+                          /*  console.log('Submitting nutzungsart');
                             console.log('status is nutzungsart');
                             if ($ctrl.nutzungsart.id === undefined || $ctrl.nutzungsart.id === null) {
                                 console.log('Saving New nutzungsart', $ctrl.nutzungsart);
@@ -100,24 +159,38 @@ angular.module('crudApp')
                             } else {
                                 updateNutzungsart($ctrl.nutzungsart, $ctrl.nutzungsart.id);
                                 console.log('nutzungsart updated with id ', $ctrl.nutzungsart.id);
-                            }
+                            }*/
+                          //zum jetzigen Zeitpunkt hier speichern und dann zum angebot gehen???
+                            $ctrl.status = $ctrl.status+1;
+                            $scope.$ctrl.hideNutzungsart = true;
+                            $scope.$ctrl.hideAusfuehrung = false;
+                            $scope.$ctrl.hideModulText = false;
+                            $scope.$ctrl.hideNutzungsartText = false;
+
                             break;
                         case 'ausfuehrung':
-                            console.log('Submitting ausfuehrung');
-                            console.log('status is ausfuehrung');
-                            if ($ctrl.ausfuehrung.id === undefined || $ctrl.ausfuehrung.id === null) {
-                                console.log('Saving New ausfuehrung', $ctrl.ausfuehrung);
-                                createAusfuehrung($ctrl.ausfuehrung);
-                            } else {
-                                updateAusfuehrung($ctrl.ausfuehrung, $ctrl.ausfuehrung.id);
-                                console.log('ausfuehrung updated with id ', $ctrl.ausfuehrung.id);
-                            }
+                            $ctrl.status = $ctrl.status+1;
+                            $scope.$ctrl.hideAusfuehrung = true;
+                            $scope.$ctrl.hideAusfuehrungText = false;
+                            $scope.$ctrl.hideAngebotErstellen = false;
+                            $scope.$ctrl.hideModulText = false;
+                            $scope.$ctrl.hideNutzungsartText = false;
+                            break;
+                        case 'feature':
+                            //bis feature bestimmt wird das die
+                          //  if ($ctrl.container.id === undefined || $ctrl.container.id === null) {
+                            //    console.log('Saving New Container', $ctrl.container);
+                              //  createContainer($ctrl.container);
+                      //      } else {
+                        //        updateContainer($ctrl.container, $ctrl.container.id);
+                          //      console.log('Container updated with id ', $ctrl.container.id);
+                       //     }
+
+                            break;
+                        case 'angebot':
+                            $ctrl.createContainer($ctrl.container);
                             break;
                     }
-
-                    $ctrl.status = $ctrl.status+1;
-
-
                 }
 
                 function berechne() {
@@ -131,9 +204,13 @@ angular.module('crudApp')
                     }
                 }
 
+
+
                 function createContainer(container) {
                     console.log('About to create container');
-                    ContainerService.createContainer(container)
+
+                   // $scope.usingCookies = { 'cookies.dotobject' : $cookies.dotobject, "cookieStore.get" : $cookieStore.get('dotobject') };
+                    return ContainerService.createContainer(container)
                         .then(
                             function (response) {
                                 console.log('container created successfully');
@@ -141,6 +218,7 @@ angular.module('crudApp')
                                 $ctrl.errorMessage = '';
                                 $ctrl.done = true;
                                 $ctrl.container = {};
+                                $ctrl.dotobject = response;
                             },
                             function (errResponse) {
                                 console.error('Error while creating container im ContainerController');
@@ -149,6 +227,27 @@ angular.module('crudApp')
                             }
                         );
                 }
+
+                function createModul(modul){
+                    console.log('About to create modul');
+                    ModulService.createModul(modul)
+                        .then(
+                            function(response){
+                                console.log('Modul created successfully');
+                                $ctrl.successMessage = 'Modul created successfully';
+                                $ctrl.errorMessage = '';
+                                $ctrl.done = true;
+                                $ctrl.nutzungsart = {};
+                                $scope.myForm.$setPristine();
+                            },
+                            function (errResponse){
+                                console.error('Error while creating Modul');
+                                $ctrl.errorMessage = 'Error while creating Modul .... :(' + errResponse.data.errorMessage;
+                                $ctrl.successMessage = '';
+                            }
+                        );
+                }
+
 
                 function createNutzungsart(nutzungsart) {
                     console.log('About to create nutzungsart');
@@ -323,11 +422,9 @@ angular.module('crudApp')
 
                     modalInstance.result.then(function (selectedItem) {
                         $ctrl.selected = selectedItem;
-                        $ctrl.container.modul = selectedItem.modul;
-                        $ctrl.container.imageID = selectedItem.imageID;
-                        $ctrl.container.preis = selectedItem.preis;
-                        $ctrl.gesamtpreis = selectedItem.preis;
-                        $ctrl.container.beschreibung = selectedItem.beschreibung;
+                        $ctrl.container.modul = selectedItem;
+                        $ctrl.container.modul.modul = selectedItem.modul;
+                        $ctrl.container.gesamtpreis = selectedItem.preis;
                         console.log("zeile 161");
                     }, function () {
                         $log.info('Modal dismissed at: ' + new Date());
@@ -355,12 +452,9 @@ angular.module('crudApp')
 
                     modalInstance.result.then(function (selectedItem) {
                         $ctrl.selected = selectedItem;
-                        $ctrl.anzahl = $scope.anzahl;
-                        $ctrl.gesamtpreis = $scope.$parent.$ctrl.selected.preis + selectedItem.preis;
-                        $scope.$parent.$ctrl.selected.preis = $scope.$parent.$ctrl.selected.preis + selectedItem.preis;
-                        $scope.$parent.$ctrl.selected = selectedItem;
-                        $scope.$parent.$ctrl.selected.typ = selectedItem.typ;
-                        $scope.$parent.$ctrl.selected.beschreibung = selectedItem.beschreibung;
+                       // $ctrl.anzahl = $scope.anzahl;
+                        $ctrl.container.gesamtpreis = $ctrl.container.gesamtpreis + selectedItem.preis;
+                        $ctrl.container.nutzungsart = selectedItem;
 
 
                         console.log("zeile 161");
@@ -390,10 +484,8 @@ angular.module('crudApp')
 
                     modalInstance.result.then(function (selectedItem) {
                         $ctrl.selected = selectedItem;
-                        $ctrl.anzahl = $scope.anzahl;
-                        $ctrl.gesamtpreis = $scope.$parent.$ctrl.selected.preis + selectedItem.preis;
-                        $scope.$parent.$ctrl.selected.preis = $scope.$parent.$ctrl.selected.preis + selectedItem.preis;
-                        $scope.$parent.$ctrl.selected = selectedItem;
+                        $ctrl.container.gesamtpreis = $ctrl.container.gesamtpreis + selectedItem.preis;
+                        $ctrl.container.ausfuehrung = selectedItem;
                         console.log("zeile 161");
                     }, function () {
                         $log.info('Modal dismissed at: ' + new Date());

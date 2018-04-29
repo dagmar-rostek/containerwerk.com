@@ -11,8 +11,11 @@ angular.module('crudApp').factory('NutzungsartService',
                 createNutzungsart: createNutzungsart,
                 updateNutzungsart: updateNutzungsart,
                 removeNutzungsart: removeNutzungsart,
-                getModulOfNutzungsart: getModulOfNutzungsart
+                getModulOfNutzungsart: getModulOfNutzungsart,
+                getNutzungsarts: getNutzungsarts,
+                getNutzungsartFuerModul: getNutzungsartFuerModul
             };
+
 
             return factory;
 
@@ -34,8 +37,25 @@ angular.module('crudApp').factory('NutzungsartService',
                 return deferred.promise;
             }
 
+            function getNutzungsarts(){
+                return ['Student', 'Hotel', 'Boardinghouse' ];
+            }
+
+
             function getAllNutzungsarts(){
                 return $localStorage.nutzungsarts;
+            }
+
+            function getNutzungsartFuerModul(modul){
+                console.log('Fetching Nutzugsarts fuer containermodul');
+                var allNutzungsart = $localStorage.nutzungsarts;
+                var modulNutzungsart = {};
+                angular.forEach(allNutzungsart, function (nutzungsart) {
+                    if(nutzungsart.modulVarianten.indexOf(modul.modul) > -1){
+                        modulNutzungsart.push(nutzungsart);
+                    }
+                });
+                return modulNutzungsart;
             }
 
             function getModulOfNutzungsart(idModul) {

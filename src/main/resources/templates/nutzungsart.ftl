@@ -9,7 +9,7 @@
       <input type="hidden" ng-model="$ctrl.nutzungsart.beschreibung"/>
       <input type="hidden" ng-model="$ctrl.nutzungsart.imageID"/>
       <input type="hidden" ng-model="$ctrl.nutzungsart.preis"/>
-      <input type="hidden" ng-model="$ctrl.nutzungsart.ausfuehrung"/>
+      <input type="hidden" ng-model="$ctrl.nutzungsart.gesamtpreis"/>
         <div class="row">
             <div class="col-lg-4">
                 <div class="modal-demo">
