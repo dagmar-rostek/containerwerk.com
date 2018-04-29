@@ -107,17 +107,17 @@
         </div>
         <div class="row" ng-hide="$ctrl.hideModul">
             <div class="col-lg-4">
-                <label><input class="form-control" type="checkbox" name="ispreisrelevant"
+                <label>Preisrelevant?<input class="form-control" type="checkbox" name="ispreisrelevant"
                               id="ispreisrelevant"
-                              ng-model="$ctrl.container.ispreisrelevant"> Preisrelevant?</label>
+                              ng-model="$ctrl.container.ispreisrelevant"> </label>
             </div>
         </div>
         <div class="row" ng-hide="$ctrl.hideModul">
             <div class="col-lg-4">
                 <div class="col-md-7">
-                    <input type="text" ng-model="$ctrl.container.bezeichnung" id="bezeichnung"
+                   <label>Bezeichnung<input type="text" ng-model="$ctrl.container.bezeichnung" id="bezeichnung"
                            class="name form-control input-sm"
-                           placeholder="Geben Sie eine Bezeichnung für die Kontainervariante an." required ng-minlength="3"/>
+                           placeholder="Geben Sie eine Bezeichnung für die Kontainervariante an." required ng-minlength="3"/>  </label>
                 </div>
             </div>
         </div>
